@@ -1,0 +1,7 @@
+{
+  "name": "nMovies",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
