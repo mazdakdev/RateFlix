@@ -1,60 +1,71 @@
 <template>
     <ion-page>
-      <ion-header :translucent="true">
-        <ion-toolbar>
-          <ion-buttons slot="start">
-            <ion-menu-button color="primary"></ion-menu-button>
-          </ion-buttons>
-          <ion-title>بیا شروع کنیم، نکنیم؟</ion-title>
-        </ion-toolbar>
-      </ion-header>
+        <ion-header :translucent="true">
+            <ion-toolbar>
+            <ion-buttons slot="start">
+                <ion-menu-button color="primary"></ion-menu-button>
+            </ion-buttons>
+            <ion-title>به فیلمات امتیاز بده ⭐️ </ion-title>
+            </ion-toolbar>
+        </ion-header>
 
-      <ion-content class="ion-padding">
-        <h1 class="text-xl">فیلمتو انتخاب کن، بهش امتیاز بده</h1>
-        <h4 class="mr-3 text-sm text-gray-200">-- یا حتی می تونیم تصادفی پیش بریم </h4>
-        <ion-grid>
-    <ion-row>
-        <ion-col size="6" size-md="4">
-            <ion-card>
-                <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
-                <ion-card-header>
-                <ion-card-title class="text-xl">آواتار</ion-card-title>
-                <ion-card-subtitle>5/5</ion-card-subtitle>
-                </ion-card-header>
+        <ion-content class="ion-padding">
+            <ion-grid >
+                <ion-row>
+                    <ion-col v-for="movie in movies" :key="movie.id" size="11" size-md="4">
+                        <ion-card>
+                            <img alt="Silhouette of mountains" :src="movie.photo" />
+                            <ion-card-header>
+                            <ion-card-title class="text-xl">{{ movie.title }}</ion-card-title>
+                            <ion-card-subtitle>{{ movie.score }}</ion-card-subtitle>
+                            </ion-card-header>
 
-                <ion-card-content>
-                جالبه
-                </ion-card-content>
+                            <ion-card-content>
+                                {{ movie.comment }}
+                            </ion-card-content>
 
-                <ion-button fill="clear">افزودن <ion-icon class="mr-1" :icon="addCircleOutline"></ion-icon></ion-button>
-            </ion-card>
-        </ion-col>
-    </ion-row>
-  </ion-grid>
-        
+                            <ion-button fill="clear">افزودن <ion-icon class="mr-1" :icon="addCircleOutline"></ion-icon></ion-button>
+                        </ion-card>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+
         </ion-content>
-  
-
     </ion-page>
-
-  </template>
+</template>
   
-  <script lang="ts">
+<script lang="ts">
   import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
   import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonIcon} from '@ionic/vue';
-  import { addCircleOutline } from 'ionicons/icons';
+  import { addCircleOutline, returnUpBack } from 'ionicons/icons';
   import { defineComponent } from 'vue';
 
-  export default defineComponent({
+  export default{
     components: { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonIcon },
-    setup(){
-        return {addCircleOutline}
+
+    data(){
+        return{
+            addCircleOutline,
+            movies: Array.from({length: 5}, (_, index) => ({
+                id: index + 1,
+                title: 'بدون عنوان',
+                comment: 'بدون نظر',
+                photo: require('@/assets/images/post.png'),
+                score: '0/0',
+            })),
+        };
+    },
+    methods: {
+        addMovie(){
+            //TODO: Updated the movie card
+        }
     }
-  });
+
+  }
 
   </script>
   
-  <style scoped>
+<style scoped>
     #container {
         text-align: center;
         position: absolute;
@@ -79,5 +90,9 @@
     #container a {
         text-decoration: none;
     }
-  </style>
+
+    ion-content{
+        --background: #fff url('@/assets/images/poster.jpeg') no-repeat center center / cover;
+    }
+</style>
   
