@@ -1,13 +1,13 @@
 <template>
   <ion-app>
     <ion-split-pane content-id="main-content">
-      <ion-menu content-id="main-content" type="overlay">
+      <ion-menu content-id="main-content" type="overlay" side="start">
         <ion-content>
-          <ion-list id="inbox-list">
+          <ion-list>
             <ion-list-header>nMovies</ion-list-header>
-            <ion-note>Find out what you like !</ion-note>
+            <ion-note>بگو چی دوست داری، بهت می گیم چی دوست داری</ion-note>
 
-            <ion-menu-toggle auto-hide="false" v-for="(p, i) in appPages" :key="i">
+            <ion-menu-toggle  auto-hide="false" v-for="(p, i) in appPages" :key="i">
               <ion-item @click="selectedIndex = i" router-direction="root" :router-link="p.url" lines="none" detail="false" class="hydrated" :class="{ selected: selectedIndex === i }">
                 <ion-icon aria-hidden="true" slot="start" :ios="p.iosIcon" :md="p.mdIcon"></ion-icon>
                 <ion-label>{{ p.title }}</ion-label>
@@ -46,19 +46,19 @@ import {
 const selectedIndex = ref(0);
 const appPages = [
   {
-    title: 'About',
+    title: 'درباره این برنامه',
     url: '/',
     iosIcon: informationCircleOutline,
     mdIcon: informationCircleOutline,
   },
   {
-    title: 'Start',
+    title: 'شروع',
     url: '/start',
     iosIcon: starHalfOutline,
     mdIcon: starHalfOutline,
   },
   {
-    title: 'Source Code',
+    title: 'سورس کد',
     url: '#',
     iosIcon: logoGithub,
     mdIcon: logoGithub,
@@ -70,8 +70,13 @@ if (path !== undefined) {
   selectedIndex.value = appPages.findIndex((page) => page.title.toLowerCase() === path.toLowerCase());
 }
 </script>
+<script lang="ts">
+document.dir = "rtl"
+</script>
 
 <style scoped>
+@import "@/assets/css/rtl.css";
+
 ion-menu ion-content {
   --background: var(--ion-item-background, var(--ion-background-color, #fff));
 }

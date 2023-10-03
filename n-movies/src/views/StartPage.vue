@@ -5,28 +5,28 @@
           <ion-buttons slot="start">
             <ion-menu-button color="primary"></ion-menu-button>
           </ion-buttons>
-          <ion-title>Let's Start Shall We.. ?</ion-title>
+          <ion-title>بیا شروع کنیم. نکنیم؟</ion-title>
         </ion-toolbar>
       </ion-header>
 
       <ion-content class="ion-padding">
-        <h1>Choose</h1>
+        <h1>انتخاب کن</h1>
         <ion-grid>
             <ion-row justify-content-center align-items-center>
                 <ion-col size="6">
-                    <ion-button shape="round" fill="outline">Randomly</ion-button>
+                    <ion-button shape="round" fill="outline">رندوم</ion-button>
                 </ion-col>
                 <ion-col size="6">
-                    <ion-button shape="round" fill="outline">Manually</ion-button>
+                    <ion-button shape="round" fill="outline">دستی</ion-button>
                 </ion-col>
             </ion-row>
         </ion-grid>
 
-        <h2>How To Choose</h2>
-        <h3 class="ml-3">Random Mode</h3>
-        <p class="ml-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque numquam eaque reprehenderit ullam rerum est perspiciatis aspernatur ipsum harum explicabo? In quidem nesciunt nam earum beatae dolores ipsam reprehenderit adipisci.</p>
-        <h3 class="ml-3">Manuall Mode</h3>
-        <p class="ml-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque numquam eaque reprehenderit ullam rerum est perspiciatis aspernatur ipsum harum explicabo? In quidem nesciunt nam earum beatae dolores ipsam reprehenderit adipisci.</p>
+        <h2>فرقشون ؟</h2>
+        <h3 class="ml-3">حالت رندوم</h3>
+        <p class="ml-3">لورم اپیسوم متن تقلبی که طراحان فلان فلان فلان فلان فلان</p>
+        <h3 class="ml-3">حالت دستی</h3>
+        <p class="ml-3">لورم اپیسوم متن تقلبی که طراحان فلان فلان فلان فلان فلان</p>
          
       </ion-content>
 
