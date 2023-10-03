@@ -1,0 +1,25 @@
+.text-gray-200{
+   color: #e2e8f0;
+}
+
+.ml-3{
+   margin-left: 0.75rem;
+ }
+
+ .mr-3{
+   margin-right: 1.75rem;
+ }
+ 
+.text-sm{
+   font-size: 0.875rem; /* 14px */
+   line-height: 1.25rem; /* 20px */
+ }
+
+ .text-xl{
+   font-size: 1.5rem; /* 24px */
+   line-height: 2rem; /* 32px */
+ }
+
+ .mr-1{
+   margin-right: 0.25rem; /* 4px */
+ }
