@@ -52,9 +52,11 @@
                         <ion-input v-model="searchQuery" type="text" placeholder="The lord of the rings"></ion-input>
                     </ion-item>
 
-                    <ion-list>
-                       
+                    <ion-list class="">
+                       <ion-item  v-for="search in searchResult" :key="search.imdbID">{{ search.Title }}</ion-item>
                     </ion-list>
+
+
                 </ion-content>
         </ion-modal>
 
@@ -68,6 +70,8 @@
     import { IonButton, IonModal, IonItem, IonInput, IonLabel, IonTextarea} from '@ionic/vue';
     import { addCircleOutline, arrowBackOutline } from 'ionicons/icons';
     import { ref, watch } from 'vue';
+    import axios from 'axios'
+
 
     const movies = ref(Array.from({length: 6}, (_, index) => ({
         id: index + 1,
@@ -79,11 +83,25 @@
 
     const isOpen = ref(false);
     const setOpen = (open: boolean) => (isOpen.value = open);
-    const searchQuery = ref('')
+    const searchQuery = ref('');
     
-    // watch(searchQuery, (newValue, oldValue) => {
-        
-    // });
+    const searchResult = ref([]);
+
+    watch(searchQuery, async(newValue, oldValue) => {
+        try{
+            const response = await axios.get('http://www.omdbapi.com', {
+                params: {
+                    apikey: "cbc2d94a",
+                    s: newValue
+                }
+            });
+
+            searchResult.value = response.data.Search;
+            console.log(searchResult)
+        } catch(error){
+            console.log(error)
+        }
+    });
 
 
 </script>
