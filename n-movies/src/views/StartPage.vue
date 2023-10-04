@@ -24,7 +24,7 @@
                                 {{ movie.comment }}
                             </ion-card-content>
 
-                            <ion-button fill="clear">افزودن <ion-icon class="mr-1" :icon="addCircleOutline"></ion-icon></ion-button>
+                            <ion-button @click="addMovie" fill="clear">افزودن <ion-icon class="mr-1" :icon="addCircleOutline"></ion-icon></ion-button>
                         </ion-card>
                     </ion-col>
                 </ion-row>
@@ -34,36 +34,24 @@
     </ion-page>
 </template>
   
-<script lang="ts">
-  import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
-  import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonIcon} from '@ionic/vue';
-  import { addCircleOutline, returnUpBack } from 'ionicons/icons';
-  import { defineComponent } from 'vue';
+<script setup lang="ts">
+    import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+    import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonIcon} from '@ionic/vue';
+    import { addCircleOutline } from 'ionicons/icons';
+    import { ref } from 'vue';
 
-  export default{
-    components: { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonIcon },
+    const movies = ref(Array.from({length: 5}, (_, index) => ({
+        id: index + 1,
+        title: 'بدون عنوان',
+        comment: 'بدون نظر',
+        photo: require('@/assets/images/post.png'),
+        score: '0/0'
+    })));
 
-    data(){
-        return{
-            addCircleOutline,
-            movies: Array.from({length: 5}, (_, index) => ({
-                id: index + 1,
-                title: 'بدون عنوان',
-                comment: 'بدون نظر',
-                photo: require('@/assets/images/post.png'),
-                score: '0/0',
-            })),
-        };
-    },
-    methods: {
-        addMovie(){
-            //TODO: Updated the movie card
-        }
+    function addMovie() {
+        alert("test")
     }
-
-  }
-
-  </script>
+</script>
   
 <style scoped>
     #container {

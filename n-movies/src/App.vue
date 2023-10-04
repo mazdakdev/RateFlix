@@ -56,12 +56,12 @@ const appPages = [
   },
   {
     title: 'درباره این برنامه',
-    url: '/',
+    url: '/about',
     iosIcon: informationCircleOutline,
     mdIcon: informationCircleOutline,
   },  {
     title: 'توسعه دهندگان',
-    url: '/',
+    url: '#',
     iosIcon: peopleOutline,
     mdIcon: peopleOutline,
   },
