@@ -12,7 +12,7 @@
         <ion-content class="ion-padding">
             <ion-grid>
                 <ion-row>
-                    <ion-col v-for="movie in movies" :key="movie.id" size="6" size-md="4" class="ion-align-items-center ion-justify-content-center i">
+                    <ion-col v-for="movie in movies" :key="movie.id" size="12" size-md="4" class="ion-align-items-center ion-justify-content-center">
                         <ion-card>
                             <img alt="Silhouette of mountains" :src="movie.photo" />
                             <ion-card-header>
@@ -27,6 +27,13 @@
                             <ion-button @click="setOpen(true)" fill="clear">افزودن <ion-icon class="mr-1" :icon="addCircleOutline"></ion-icon></ion-button>
                         </ion-card>
                     </ion-col>
+
+                    
+                    <ion-col  class="ion-text-center mt-6">
+                        <ion-button shape="round" color="medium" fill="clear">ادامه <ion-icon class="mr-1" :icon="arrowBackOutline"></ion-icon></ion-button>
+                    </ion-col>
+                    
+                    
                 </ion-row>
             </ion-grid>
             <ion-modal :is-open="isOpen">
@@ -44,6 +51,10 @@
                         <ion-label position="stacked">جستجوی فیلم</ion-label>
                         <ion-input v-model="searchQuery" type="text" placeholder="The lord of the rings"></ion-input>
                     </ion-item>
+
+                    <ion-list>
+                       
+                    </ion-list>
                 </ion-content>
         </ion-modal>
 
@@ -55,10 +66,10 @@
     import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
     import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonIcon} from '@ionic/vue';
     import { IonButton, IonModal, IonItem, IonInput, IonLabel, IonTextarea} from '@ionic/vue';
-    import { addCircleOutline } from 'ionicons/icons';
+    import { addCircleOutline, arrowBackOutline } from 'ionicons/icons';
     import { ref, watch } from 'vue';
 
-    const movies = ref(Array.from({length: 5}, (_, index) => ({
+    const movies = ref(Array.from({length: 6}, (_, index) => ({
         id: index + 1,
         title: 'بدون عنوان',
         comment: 'بدون نظر',
@@ -70,9 +81,9 @@
     const setOpen = (open: boolean) => (isOpen.value = open);
     const searchQuery = ref('')
     
-    watch(searchQuery, (newValue, oldValue) => {
+    // watch(searchQuery, (newValue, oldValue) => {
         
-    });
+    // });
 
 
 </script>
@@ -103,10 +114,10 @@
         text-decoration: none;
     }
 
-    ion-content{
-        --background: #fff url('@/assets/images/poster.jpeg') no-repeat center center / cover;
+    @media (max-width: 767px) {
+        ion-col {
+            text-align: center !important;
+        }
     }
-
-
 </style>
   
