@@ -4,6 +4,11 @@ import { RouteRecordRaw } from 'vue-router';
 const routes: Array<RouteRecordRaw> = [
   {
     path: '',
+    redirect: '/start'
+  },
+
+  {
+    path: '/about',
     component: () => import("@/views/AboutPage.vue")
   },
   {

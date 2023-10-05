@@ -40,22 +40,30 @@ import { ref } from 'vue';
 import {
   informationCircleOutline,
   starHalfOutline,
-  logoGithub
+  logoGithub,
+  peopleOutline
+
 } from 'ionicons/icons';
 
+document.dir = "rtl";
 const selectedIndex = ref(0);
 const appPages = [
-  {
-    title: 'درباره این برنامه',
-    url: '/',
-    iosIcon: informationCircleOutline,
-    mdIcon: informationCircleOutline,
-  },
   {
     title: 'شروع',
     url: '/start',
     iosIcon: starHalfOutline,
     mdIcon: starHalfOutline,
+  },
+  {
+    title: 'درباره این برنامه',
+    url: '/about',
+    iosIcon: informationCircleOutline,
+    mdIcon: informationCircleOutline,
+  },  {
+    title: 'توسعه دهندگان',
+    url: '#',
+    iosIcon: peopleOutline,
+    mdIcon: peopleOutline,
   },
   {
     title: 'سورس کد',
@@ -70,12 +78,9 @@ if (path !== undefined) {
   selectedIndex.value = appPages.findIndex((page) => page.title.toLowerCase() === path.toLowerCase());
 }
 </script>
-<script lang="ts">
-document.dir = "rtl"
-</script>
+
 
 <style scoped>
-@import "@/assets/css/rtl.css";
 
 ion-menu ion-content {
   --background: var(--ion-item-background, var(--ion-background-color, #fff));
