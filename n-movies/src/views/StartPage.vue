@@ -10,6 +10,7 @@
         </ion-header>
 
         <ion-content class="ion-padding">
+
             <ion-grid>
                 <ion-row>
                     <ion-col v-for="movie in movies" :key="movie.id" size="12" size-md="4" class="ion-align-items-center ion-justify-content-center">
@@ -32,11 +33,12 @@
                     <ion-col  class="ion-text-center mt-6">
                         <ion-button shape="round" color="medium" fill="clear">ادامه <ion-icon class="mr-1" :icon="arrowBackOutline"></ion-icon></ion-button>
                     </ion-col>
-                    
-                    
+    
                 </ion-row>
             </ion-grid>
+
             <ion-modal :is-open="isOpen">
+
                 <ion-header>
                     <ion-toolbar>
                     <ion-title>اضافه کردن فیلم</ion-title>
@@ -59,7 +61,7 @@
                     </ion-item>
 
                     <ion-list class="searchlist" v-if="showResults">
-                       <ion-item  v-for="search in searchResult" :key="search.imdbID" @click="selectMovie(search)">{{ search.Title }}</ion-item>
+                    <ion-item  v-for="search in searchResult" :key="search.imdbID" @click="selectMovie(search)">{{ search.Title }}</ion-item>
                     </ion-list>
 
                     <ion-item class="mt-5"><ion-textarea  label="نظر شما" labelPlacement="floating" placeholder="فیلم بسیار مهیج و جالبی هستش"></ion-textarea></ion-item>
@@ -69,6 +71,7 @@
                         <ion-button color="primary" fill="outline">ثبت و ادامه</ion-button>
                     </div>
                 </ion-content>
+                
         </ion-modal>
 
         </ion-content>
@@ -124,7 +127,7 @@
         }
     };
 
-    const selectMovie = (movie) => {
+    const selectMovie = (movie: { Title: string; Poster: any; }) => {
         searchQuery.value = movie.Title;
         showResults.value = false;
         moviePoster.value = movie.Poster;
