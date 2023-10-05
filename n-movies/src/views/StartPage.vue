@@ -52,10 +52,16 @@
                         <ion-input v-model="searchQuery" type="text" placeholder="The lord of the rings"></ion-input>
                     </ion-item>
 
-                    <ion-list class="">
+                    <ion-list class="searchlist" :class="searchListClasses">
                        <ion-item  v-for="search in searchResult" :key="search.imdbID">{{ search.Title }}</ion-item>
                     </ion-list>
 
+                        <div class="ion-align-items-center ion-justify-content-center">
+                            <img  src="https://m.media-amazon.com/images/M/MV5BN2EyZjM3NzUtNWUzMi00MTgxLWI0NTctMzY4M2VlOTdjZWRiXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_SX300.jpg"
+           alt="Poster" class="w-32 h-32 h-auto ion-align-self-center ion-text-center" />
+
+                        </div>
+                       
 
                 </ion-content>
         </ion-modal>
@@ -70,7 +76,8 @@
     import { IonButton, IonModal, IonItem, IonInput, IonLabel, IonTextarea} from '@ionic/vue';
     import { addCircleOutline, arrowBackOutline } from 'ionicons/icons';
     import { ref, watch } from 'vue';
-    import axios from 'axios'
+    import axios from 'axios';
+    import StarRating from 'vue-star-rating'
 
 
     const movies = ref(Array.from({length: 6}, (_, index) => ({
@@ -87,8 +94,13 @@
     
     const searchResult = ref([]);
 
+    const searchListClasses = ref('hidden');
+
     watch(searchQuery, async(newValue, oldValue) => {
         try{
+            if(newValue == ""){
+                searchListClasses.value = "hidden";
+            }
             const response = await axios.get('http://www.omdbapi.com', {
                 params: {
                     apikey: "cbc2d94a",
@@ -96,8 +108,8 @@
                 }
             });
 
-            searchResult.value = response.data.Search;
-            console.log(searchResult)
+            searchResult.value = response.data.Search.slice(0, -3);
+            searchListClasses.value = '';
         } catch(error){
             console.log(error)
         }
@@ -136,6 +148,10 @@
         ion-col {
             text-align: center !important;
         }
+    }
+
+    .searchlist{
+        width: 70%;
     }
 </style>
   

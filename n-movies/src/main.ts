@@ -21,6 +21,7 @@ import '@ionic/vue/css/flex-utils.css';
 import '@ionic/vue/css/display.css';
 import '@/assets/css/tailwind.min.css'
 
+
 /* Theme variables */
 import './theme/variables.css';
 
