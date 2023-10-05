@@ -47,22 +47,27 @@
                 </ion-header>
 
                 <ion-content class="ion-padding">
-                    <ion-item>
+
+                    <div class="flex flex-col items-center">
+                        <img  :src="moviePoster"
+                        alt="Poster" class="w-32 h-32 h-auto text-center" />
+                        <star-rating class="mt-1" read-only="true" star-size="20" rating="3.5" increment="0.01" rtl="true" text-class="hidden"></star-rating>
+                    </div>
+                    <ion-item class="mt-5">
                         <ion-label position="stacked">جستجوی فیلم</ion-label>
-                        <ion-input v-model="searchQuery" type="text" placeholder="The lord of the rings"></ion-input>
+                        <ion-input v-model="searchQuery" @input="searchMovies" type="text" placeholder="The lord of the rings"></ion-input>
                     </ion-item>
 
-                    <ion-list class="searchlist" :class="searchListClasses">
-                       <ion-item  v-for="search in searchResult" :key="search.imdbID">{{ search.Title }}</ion-item>
+                    <ion-list class="searchlist" v-if="showResults">
+                       <ion-item  v-for="search in searchResult" :key="search.imdbID" @click="selectMovie(search)">{{ search.Title }}</ion-item>
                     </ion-list>
 
-                        <div class="ion-align-items-center ion-justify-content-center">
-                            <img  src="https://m.media-amazon.com/images/M/MV5BN2EyZjM3NzUtNWUzMi00MTgxLWI0NTctMzY4M2VlOTdjZWRiXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_SX300.jpg"
-           alt="Poster" class="w-32 h-32 h-auto ion-align-self-center ion-text-center" />
+                    <ion-item class="mt-5"><ion-textarea  label="نظر شما" labelPlacement="floating" placeholder="فیلم بسیار مهیج و جالبی هستش"></ion-textarea></ion-item>
 
-                        </div>
-                       
-
+                    <div class="flex mt-10 justify-center">
+                        <ion-button color="tertiary" fill="outline">حدس امتیاز</ion-button>
+                        <ion-button color="primary" fill="outline">ثبت و ادامه</ion-button>
+                    </div>
                 </ion-content>
         </ion-modal>
 
@@ -75,6 +80,7 @@
     import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonIcon} from '@ionic/vue';
     import { IonButton, IonModal, IonItem, IonInput, IonLabel, IonTextarea} from '@ionic/vue';
     import { addCircleOutline, arrowBackOutline } from 'ionicons/icons';
+    import thumbnail from '@/assets/images/thumbnail.svg'
     import { ref, watch } from 'vue';
     import axios from 'axios';
     import StarRating from 'vue-star-rating'
@@ -91,29 +97,39 @@
     const isOpen = ref(false);
     const setOpen = (open: boolean) => (isOpen.value = open);
     const searchQuery = ref('');
-    
+    const searchListClasses = ref('')
     const searchResult = ref([]);
+    const moviePoster = ref(thumbnail);
+    const showResults = ref(false);
 
-    const searchListClasses = ref('hidden');
-
-    watch(searchQuery, async(newValue, oldValue) => {
-        try{
-            if(newValue == ""){
-                searchListClasses.value = "hidden";
-            }
+    const searchMovies = async () => {
+        if (searchQuery.value) {
+            try {
             const response = await axios.get('http://www.omdbapi.com', {
                 params: {
-                    apikey: "cbc2d94a",
-                    s: newValue
-                }
+                apikey: 'cbc2d94a',
+                s: searchQuery.value,
+                },
             });
-
-            searchResult.value = response.data.Search.slice(0, -3);
             searchListClasses.value = '';
-        } catch(error){
-            console.log(error)
+            searchResult.value = response.data.Search.slice(0, -5);
+            showResults.value = true;
+
+            }
+            catch (error) {
+                console.error(error);
+            }
+        } else {
+            searchResult.value = [];
         }
-    });
+    };
+
+    const selectMovie = (movie) => {
+        searchQuery.value = movie.Title;
+        showResults.value = false;
+        moviePoster.value = movie.Poster;
+
+    };
 
 
 </script>
