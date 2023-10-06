@@ -11,31 +11,29 @@
 
         <ion-content class="ion-padding">
 
-            <ion-grid>
-                <ion-row>
-                    <ion-col v-for="(movie, index) in movies" :key="movie.id" size="12" size-md="4" class="ion-align-items-center ion-justify-content-center">
-                        <ion-card>
-                            <img alt="Silhouette of mountains" :src="movie.photo" />
-                            <ion-card-header>
-                            <ion-card-title class="text-xl">{{ movie.title }}</ion-card-title>
-                            <ion-card-subtitle>{{ movie.score }}</ion-card-subtitle>
-                            </ion-card-header>
+            <div class="grid md:grid-cols-3 grid-cols-1">
+                <ion-card v-for="(movie, index) in movies" :key="movie.id" class="flex flex-col">
+                                <img alt="Silhouette of mountains" :src="movie.photo" />
+                                <ion-card-header>
+                                    <ion-card-title class="text-xl">{{ movie.title }}</ion-card-title>
+                                    <ion-card-subtitle>{{ movie.score }}</ion-card-subtitle>
+                                </ion-card-header>
 
-                            <ion-card-content>
-                                {{ movie.comment }}
-                            </ion-card-content>
+                                <ion-card-content class="h-24 overflow-hidden">
+                                    {{ movie.comment }}
+                                </ion-card-content>
 
-                            <ion-button @click="openModal(index)" fill="clear">افزودن <ion-icon class="mr-1" :icon="addCircleOutline"></ion-icon></ion-button>
-                        </ion-card>
-                    </ion-col>
+                                <ion-button @click="openModal(index)" fill="clear" class="mt-auto">
+                                    ویرایش <ion-icon class="mr-1" :icon="createOutline"></ion-icon>
+                                </ion-button>
+                </ion-card>
+            </div>
 
-                    
-                    <ion-col  class="ion-text-center mt-6">
-                        <ion-button shape="round" color="medium" fill="clear">ادامه <ion-icon class="mr-1" :icon="arrowBackOutline"></ion-icon></ion-button>
-                    </ion-col>
-    
-                </ion-row>
-            </ion-grid>
+            <div class="flex justify-center mt-5">
+                <ion-button shape="round" color="medium" fill="clear">
+                    ادامه <ion-icon class="mr-1" :icon="arrowBackOutline"></ion-icon>
+                </ion-button>
+            </div>
 
             <ion-modal :is-open="isOpen">
 
@@ -46,7 +44,7 @@
                         <ion-button @click="closeModal()">لغو</ion-button>
                     </ion-buttons>
                     </ion-toolbar>
-                </ion-header>
+                </ion-header> 
 
                 <ion-content class="ion-padding">
 
@@ -82,7 +80,7 @@
     import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
     import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonIcon} from '@ionic/vue';
     import { IonButton, IonModal, IonItem, IonInput, IonLabel, IonTextarea} from '@ionic/vue';
-    import { addCircleOutline, arrowBackOutline, contractOutline } from 'ionicons/icons';
+    import { createOutline, arrowBackOutline, } from 'ionicons/icons';
     import thumbnail from '@/assets/images/thumbnail.svg'
     import { ref, watch } from 'vue';
     import axios from 'axios';
@@ -150,7 +148,7 @@
        movies.value[currentMovieIndex.value].title = searchQuery.value;
        movies.value[currentMovieIndex.value].photo = moviePoster.value;
        movies.value[currentMovieIndex.value].comment = comment.value;
-       comment.value = '';
+       comment.value = 'بدون نظر.';
        moviePoster.value = thumbnail;
        searchQuery.value = '';
        isOpen.value = false;
@@ -189,9 +187,11 @@
             text-align: center !important;
         }
     }
-
     .searchlist{
         width: 70%;
     }
+
+
+
 </style>
   
