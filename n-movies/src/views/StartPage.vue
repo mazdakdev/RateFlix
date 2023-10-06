@@ -13,7 +13,7 @@
 
             <ion-grid>
                 <ion-row>
-                    <ion-col v-for="movie in movies" :key="movie.id" size="12" size-md="4" class="ion-align-items-center ion-justify-content-center">
+                    <ion-col v-for="(movie, index) in movies" :key="movie.id" size="12" size-md="4" class="ion-align-items-center ion-justify-content-center">
                         <ion-card>
                             <img alt="Silhouette of mountains" :src="movie.photo" />
                             <ion-card-header>
@@ -25,7 +25,7 @@
                                 {{ movie.comment }}
                             </ion-card-content>
 
-                            <ion-button @click="setOpen(true)" fill="clear">افزودن <ion-icon class="mr-1" :icon="addCircleOutline"></ion-icon></ion-button>
+                            <ion-button @click="openModal(index)" fill="clear">افزودن <ion-icon class="mr-1" :icon="addCircleOutline"></ion-icon></ion-button>
                         </ion-card>
                     </ion-col>
 
@@ -43,7 +43,7 @@
                     <ion-toolbar>
                     <ion-title>اضافه کردن فیلم</ion-title>
                     <ion-buttons slot="end">
-                        <ion-button @click="setOpen(false)">لغو</ion-button>
+                        <ion-button @click="closeModal()">لغو</ion-button>
                     </ion-buttons>
                     </ion-toolbar>
                 </ion-header>
@@ -61,14 +61,14 @@
                     </ion-item>
 
                     <ion-list class="searchlist" v-if="showResults">
-                    <ion-item  v-for="search in searchResult" :key="search.imdbID" @click="selectMovie(search)">{{ search.Title }}</ion-item>
+                        <ion-item  v-for="search in searchResult" :key="search.imdbID" @click="selectMovie(search)">{{ search.Title }}</ion-item>
                     </ion-list>
 
-                    <ion-item class="mt-5"><ion-textarea  label="نظر شما" labelPlacement="floating" placeholder="فیلم بسیار مهیج و جالبی هستش"></ion-textarea></ion-item>
+                    <ion-item class="mt-5"><ion-textarea  label="نظر شما" v-model="comment" labelPlacement="floating" placeholder="فیلم بسیار مهیج و جالبی هستش"></ion-textarea></ion-item>
 
                     <div class="flex mt-10 justify-center">
                         <ion-button color="tertiary" fill="outline">حدس امتیاز</ion-button>
-                        <ion-button color="primary" fill="outline">ثبت و ادامه</ion-button>
+                        <ion-button color="primary" @click="submitMovie" fill="outline">ثبت و ادامه</ion-button>
                     </div>
                 </ion-content>
                 
@@ -82,7 +82,7 @@
     import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
     import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonIcon} from '@ionic/vue';
     import { IonButton, IonModal, IonItem, IonInput, IonLabel, IonTextarea} from '@ionic/vue';
-    import { addCircleOutline, arrowBackOutline } from 'ionicons/icons';
+    import { addCircleOutline, arrowBackOutline, contractOutline } from 'ionicons/icons';
     import thumbnail from '@/assets/images/thumbnail.svg'
     import { ref, watch } from 'vue';
     import axios from 'axios';
@@ -98,12 +98,24 @@
     })));
 
     const isOpen = ref(false);
-    const setOpen = (open: boolean) => (isOpen.value = open);
     const searchQuery = ref('');
     const searchListClasses = ref('')
     const searchResult = ref([]);
     const moviePoster = ref(thumbnail);
     const showResults = ref(false);
+
+    const currentMovieIndex = ref(0)
+    const comment = ref('')
+
+    const openModal = (index : any) => {
+        isOpen.value = true;
+        currentMovieIndex.value = index;
+    }
+
+    const closeModal = () => {
+        isOpen.value = false;
+        currentMovieIndex.value = 0;
+    }
 
     const searchMovies = async () => {
         if (searchQuery.value) {
@@ -134,6 +146,15 @@
 
     };
 
+    const submitMovie = () => {
+       movies.value[currentMovieIndex.value].title = searchQuery.value;
+       movies.value[currentMovieIndex.value].photo = moviePoster.value;
+       movies.value[currentMovieIndex.value].comment = comment.value;
+       comment.value = '';
+       moviePoster.value = thumbnail;
+       searchQuery.value = '';
+       isOpen.value = false;
+    }
 
 </script>
   
