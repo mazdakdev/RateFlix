@@ -87,7 +87,15 @@
     import StarRating from 'vue-star-rating'
 
 
-    const movies = ref(Array.from({length: 6}, (_, index) => ({
+    interface Movie {
+        id: number;
+        title: string;
+        comment: string;
+        photo: string;
+        score: string;
+    }
+
+    const movies = ref<Movie[]>(Array.from({ length: 6 }, (_, index) => ({
         id: index + 1,
         title: 'بدون عنوان',
         comment: 'بدون نظر',
@@ -97,23 +105,23 @@
 
     const isOpen = ref(false);
     const searchQuery = ref('');
-    const searchListClasses = ref('')
-    const searchResult = ref([]);
+    const searchListClasses = ref('');
+    const searchResult = ref<Movie[]>([]);
     const moviePoster = ref(thumbnail);
     const showResults = ref(false);
 
-    const currentMovieIndex = ref(0)
-    const comment = ref('')
+    const currentMovieIndex = ref(0);
+    const comment = ref('');
 
-    const openModal = (index : any) => {
+    const openModal = (index: number) => {
         isOpen.value = true;
         currentMovieIndex.value = index;
-    }
+    };
 
     const closeModal = () => {
         isOpen.value = false;
         currentMovieIndex.value = 0;
-    }
+    };
 
     const searchMovies = async () => {
         if (searchQuery.value) {
@@ -127,32 +135,30 @@
             searchListClasses.value = '';
             searchResult.value = response.data.Search.slice(0, -5);
             showResults.value = true;
-
-            }
-            catch (error) {
-                console.error(error);
+            } catch (error) {
+            console.error(error);
+            // Handle the error here (e.g., display an error message)
             }
         } else {
             searchResult.value = [];
         }
-    };
+        };
 
-    const selectMovie = (movie: { Title: string; Poster: any; }) => {
+        const selectMovie = (movie: { Title: string; Poster: any }) => {
         searchQuery.value = movie.Title;
         showResults.value = false;
         moviePoster.value = movie.Poster;
-
     };
 
     const submitMovie = () => {
-       movies.value[currentMovieIndex.value].title = searchQuery.value;
-       movies.value[currentMovieIndex.value].photo = moviePoster.value;
-       movies.value[currentMovieIndex.value].comment = comment.value;
-       comment.value = 'بدون نظر.';
-       moviePoster.value = thumbnail;
-       searchQuery.value = '';
-       isOpen.value = false;
-    }
+        movies.value[currentMovieIndex.value].title = searchQuery.value;
+        movies.value[currentMovieIndex.value].photo = moviePoster.value;
+        movies.value[currentMovieIndex.value].comment = comment.value;
+        comment.value = 'بدون نظر.';
+        moviePoster.value = thumbnail;
+        searchQuery.value = '';
+        isOpen.value = false;
+    };
 
 </script>
   
