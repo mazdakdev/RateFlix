@@ -2,86 +2,89 @@ import pandas as pd
 from math import sqrt
 
 class MovieRecommender:
-    def __init__(self, movies_path, ratings_path):
-        self.movies_df = pd.read_csv(movies.csv)
-        self.ratings_df = pd.read_csv(ratings.csv)
+    def __init__(self, movies_df, ratings_df):
+        self.movies_df = pd.read_csv(movies_df)
+        self.ratings_df = pd.read_csv(ratings_df)
 
-    def _preprocess_movies(self):
-        self.movies_df['year'] = self.movies_df.title.str.extract('(\(\d\d\d\d\))',expand=False)
-        self.movies_df['year'] = self.movies_df.year.str.extract('(\d\d\d\d)',expand=False)
+    def preprocess_movies(self):
+        self.movies_df['year'] = self.movies_df.title.str.extract('(\(\d\d\d\d\))', expand=False)
+        self.movies_df['year'] = self.movies_df.year.str.extract('(\d\d\d\d)', expand=False)
         self.movies_df['title'] = self.movies_df.title.str.replace('(\(\d\d\d\d\))', '')
         self.movies_df['title'] = self.movies_df['title'].apply(lambda x: x.strip())
         self.movies_df = self.movies_df.drop('genres', 1)
 
-    def _preprocess_ratings(self):
+    def preprocess_ratings(self):
         self.ratings_df = self.ratings_df.drop('timestamp', 1)
 
-    def _get_user_input(self, userInput):
-        inputMovies = pd.DataFrame(userInput)
-        inputId = self.movies_df[self.movies_df['title'].isin(inputMovies['title'].tolist())]
-        inputMovies = pd.merge(inputId, inputMovies)
-        return inputMovies.drop('year', 1)
+    def get_user_input_dataframe(self, user_input):
+        input_movies = pd.DataFrame(user_input)
+        input_id = self.movies_df[self.movies_df['title'].isin(input_movies['title'].tolist())]
+        input_movies = pd.merge(input_id, input_movies)
+        input_movies = input_movies.drop('year', 1)
+        return input_movies
 
-    def _filter_user_subset(self, inputMovies):
-        userSubset = self.ratings_df[self.ratings_df['movieId'].isin(inputMovies['movieId'].tolist())]
-        return userSubset
+    def filter_user_subset(self, input_movies):
+        user_subset = self.ratings_df[self.ratings_df['movieId'].isin(input_movies['movieId'].tolist())]
+        return user_subset
 
-    def _calculate_pearson_correlation(self, userSubsetGroup, inputMovies):
-        pearsonCorrelationDict = {}
-        
-        for name, group in userSubsetGroup:
+    def calculate_pearson_correlation(self, user_subset_group, input_movies):
+        pearson_correlation_dict = {}
+
+        for name, group in user_subset_group:
             group = group.sort_values(by='movieId')
-            inputMovies = inputMovies.sort_values(by='movieId')
+            input_movies_subset = input_movies[input_movies['movieId'].isin(group['movieId'].tolist())]
 
-            nRatings = len(group)
-            temp_df = inputMovies[inputMovies['movieId'].isin(group['movieId'].tolist())]
-            tempRatingList = temp_df['rating'].tolist()
-            tempGroupList = group['rating'].tolist()
+            n_ratings = len(group)
+            temp_rating_list = input_movies_subset['rating'].tolist()
+            temp_group_list = group['rating'].tolist()
 
-            Sxx = sum([i**2 for i in tempRatingList]) - pow(sum(tempRatingList),2)/float(nRatings)
-            Syy = sum([i**2 for i in tempGroupList]) - pow(sum(tempGroupList),2)/float(nRatings)
-            Sxy = sum(i*j for i, j in zip(tempRatingList, tempGroupList)) - sum(tempRatingList)*sum(tempGroupList)/float(nRatings)
+            sxx = sum([i**2 for i in temp_rating_list]) - pow(sum(temp_rating_list), 2) / float(n_ratings)
+            syy = sum([i**2 for i in temp_group_list]) - pow(sum(temp_group_list), 2) / float(n_ratings)
+            sxy = sum(i*j for i, j in zip(temp_rating_list, temp_group_list)) - sum(temp_rating_list) * sum(temp_group_list) / float(n_ratings)
 
-            if Sxx != 0 and Syy != 0:
-                pearsonCorrelationDict[name] = Sxy/sqrt(Sxx*Syy)
+            if sxx != 0 and syy != 0:
+                pearson_correlation_dict[name] = sxy / sqrt(sxx * syy)
             else:
-                pearsonCorrelationDict[name] = 0
-        
-        return pearsonCorrelationDict
+                pearson_correlation_dict[name] = 0
 
-    def predict(self, userInput):
-        self._preprocess_movies()
-        self._preprocess_ratings()
+        return pd.DataFrame.from_dict(pearson_correlation_dict, orient='index', columns=['similarityIndex'])
 
-        inputMovies = self._get_user_input(userInput)
-        userSubset = self._filter_user_subset(inputMovies)
-        userSubsetGroup = userSubset.groupby(['userId'])
 
-        pearsonCorrelationDict = self._calculate_pearson_correlation(userSubsetGroup, inputMovies)
+    def recommend_movies(self, top_users, user_subset, ratings_df):
+        top_users_rating = top_users.merge(ratings_df, left_on='userId', right_on='userId', how='inner')
+        top_users_rating['weightedRating'] = top_users_rating['similarityIndex'] * top_users_rating['rating']
 
-        pearsonDF = pd.DataFrame.from_dict(pearsonCorrelationDict, orient='index')
-        pearsonDF.columns = ['similarityIndex']
-        pearsonDF['userId'] = pearsonDF.index
-        pearsonDF.index = range(len(pearsonDF))
-
-        topUsers = pearsonDF.sort_values(by='similarityIndex', ascending=False)[0:50]
-        topUsersRating = topUsers.merge(self.ratings_df, left_on='userId', right_on='userId', how='inner')
-
-        topUsersRating['weightedRating'] = topUsersRating['similarityIndex'] * topUsersRating['rating']
-
-        tempTopUsersRating = topUsersRating.groupby('movieId').sum()[['similarityIndex', 'weightedRating']]
-        tempTopUsersRating.columns = ['sum_similarityIndex', 'sum_weightedRating']
+        temp_top_users_rating = top_users_rating.groupby('movieId').sum()[['similarityIndex', 'weightedRating']]
+        temp_top_users_rating.columns = ['sum_similarityIndex', 'sum_weightedRating']
 
         recommendation_df = pd.DataFrame()
-        recommendation_df['weighted average recommendation score'] = tempTopUsersRating['sum_weightedRating'] / tempTopUsersRating['sum_similarityIndex']
-        recommendation_df['movieId'] = tempTopUsersRating.index
+        recommendation_df['weighted average recommendation score'] = temp_top_users_rating['sum_weightedRating'] / temp_top_users_rating['sum_similarityIndex']
+        recommendation_df['movieId'] = temp_top_users_rating.index
 
-        recommendation_df = recommendation_df.sort_values(by='weighted average recommendation score', ascending=False)
+        return recommendation_df.sort_values(by='weighted average recommendation score', ascending=False)
 
-        return recommendation_df.merge(self.movies_df, left_on='movieId', right_on='movieId').head(10)
+    def recommend(self, user_input):
+        self.preprocess_movies()
+        self.preprocess_ratings()
 
-# Example usage
-recommender = MovieRecommender('movies.csv', 'ratings.csv')
+        input_movies = self.get_user_input_dataframe(user_input)
+        user_subset = self.filter_user_subset(input_movies)
+        user_subset_group = user_subset.groupby(['userId'])
+        
+        pearson_df = self.calculate_pearson_correlation(user_subset_group, input_movies)
+        pearson_df['userId'] = pearson_df.index
+
+        top_users = pearson_df.sort_values(by='similarityIndex', ascending=False).head(50)
+        recommendation_df = self.recommend_movies(top_users, user_subset, self.ratings_df)
+
+        return self.movies_df.loc[self.movies_df['movieId'].isin(recommendation_df.head(10)['movieId'].tolist())]
+
+
+# Example Usage:
+movies_file = 'movies.csv'
+ratings_file = 'ratings.csv'
+recommender = MovieRecommender(movies_file, ratings_file)
+
 user_input = [
     {'title': 'Breakfast Club, The', 'rating': 5},
     {'title': 'Toy Story', 'rating': 3.5},
@@ -89,5 +92,6 @@ user_input = [
     {'title': "Pulp Fiction", 'rating': 5},
     {'title': 'Akira', 'rating': 4.5}
 ]
-result = recommender.predict(user_input)
-print(result)
+
+recommendations = recommender.recommend(user_input)
+print(recommendations)
