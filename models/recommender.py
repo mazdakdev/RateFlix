@@ -5,22 +5,25 @@ class MovieRecommender:
     def __init__(self, movies_df, ratings_df):
         self.movies_df = pd.read_csv(movies_df)
         self.ratings_df = pd.read_csv(ratings_df)
+        self.preprocess_movies()
+        self.preprocess_ratings()
+
 
     def preprocess_movies(self):
         self.movies_df['year'] = self.movies_df.title.str.extract('(\(\d\d\d\d\))', expand=False)
         self.movies_df['year'] = self.movies_df.year.str.extract('(\d\d\d\d)', expand=False)
-        self.movies_df['title'] = self.movies_df.title.str.replace('(\(\d\d\d\d\))', '')
+        self.movies_df['title'] = self.movies_df.title.str.replace('(\(\d\d\d\d\))', '', regex=True)
         self.movies_df['title'] = self.movies_df['title'].apply(lambda x: x.strip())
-        self.movies_df = self.movies_df.drop('genres', 1)
+        self.movies_df = self.movies_df.drop('genres', axis=1)
 
     def preprocess_ratings(self):
-        self.ratings_df = self.ratings_df.drop('timestamp', 1)
+        self.ratings_df = self.ratings_df.drop('timestamp', axis=1)
 
     def get_user_input_dataframe(self, user_input):
         input_movies = pd.DataFrame(user_input)
         input_id = self.movies_df[self.movies_df['title'].isin(input_movies['title'].tolist())]
         input_movies = pd.merge(input_id, input_movies)
-        input_movies = input_movies.drop('year', 1)
+        input_movies = input_movies.drop('year', axis=1)
         return input_movies
 
     def filter_user_subset(self, input_movies):
@@ -64,9 +67,6 @@ class MovieRecommender:
         return recommendation_df.sort_values(by='weighted average recommendation score', ascending=False)
 
     def recommend(self, user_input):
-        self.preprocess_movies()
-        self.preprocess_ratings()
-
         input_movies = self.get_user_input_dataframe(user_input)
         user_subset = self.filter_user_subset(input_movies)
         user_subset_group = user_subset.groupby(['userId'])
