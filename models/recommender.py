@@ -8,7 +8,6 @@ class MovieRecommender:
         self.preprocess_movies()
         self.preprocess_ratings()
 
-
     def preprocess_movies(self):
         self.movies_df['year'] = self.movies_df.title.str.extract('(\(\d\d\d\d\))', expand=False)
         self.movies_df['year'] = self.movies_df.year.str.extract('(\d\d\d\d)', expand=False)
@@ -41,9 +40,9 @@ class MovieRecommender:
             temp_rating_list = input_movies_subset['rating'].tolist()
             temp_group_list = group['rating'].tolist()
 
+            sxy = sum([i * j for i, j in zip(temp_rating_list, temp_group_list)]) - (sum(temp_rating_list) * sum(temp_group_list)) / float(n_ratings)
             sxx = sum([i**2 for i in temp_rating_list]) - pow(sum(temp_rating_list), 2) / float(n_ratings)
             syy = sum([i**2 for i in temp_group_list]) - pow(sum(temp_group_list), 2) / float(n_ratings)
-            sxy = sum(i*j for i, j in zip(temp_rating_list, temp_group_list)) - sum(temp_rating_list) * sum(temp_group_list) / float(n_ratings)
 
             if sxx != 0 and syy != 0:
                 pearson_correlation_dict[name] = sxy / sqrt(sxx * syy)
@@ -53,10 +52,9 @@ class MovieRecommender:
         return pd.DataFrame.from_dict(pearson_correlation_dict, orient='index', columns=['similarityIndex'])
 
 
-    def recommend_movies(self, top_users, user_subset, ratings_df):
-        top_users_rating = top_users.merge(ratings_df, left_on='userId', right_on='userId', how='inner')
+    def recommend_movies(self, top_users, user_subset):
+        top_users_rating = pd.concat([top_users, self.ratings_df], join='inner', axis=1)
         top_users_rating['weightedRating'] = top_users_rating['similarityIndex'] * top_users_rating['rating']
-
         temp_top_users_rating = top_users_rating.groupby('movieId').sum()[['similarityIndex', 'weightedRating']]
         temp_top_users_rating.columns = ['sum_similarityIndex', 'sum_weightedRating']
 
@@ -73,11 +71,13 @@ class MovieRecommender:
         
         pearson_df = self.calculate_pearson_correlation(user_subset_group, input_movies)
         pearson_df['userId'] = pearson_df.index
+        pearson_df.index = range(len(pearson_df))
 
         top_users = pearson_df.sort_values(by='similarityIndex', ascending=False).head(50)
-        recommendation_df = self.recommend_movies(top_users, user_subset, self.ratings_df)
+        recommendation_df = self.recommend_movies(top_users, user_subset)
 
         return self.movies_df.loc[self.movies_df['movieId'].isin(recommendation_df.head(10)['movieId'].tolist())]
+
 
 
 # Example Usage:
@@ -90,8 +90,7 @@ user_input = [
     {'title': 'Toy Story', 'rating': 3.5},
     {'title': 'Jumanji', 'rating': 2},
     {'title': "Pulp Fiction", 'rating': 5},
-    {'title': 'Akira', 'rating': 4.5}
-]
+    {'title': 'Akira', 'rating': 4.5}]
 
 recommendations = recommender.recommend(user_input)
 print(recommendations)
