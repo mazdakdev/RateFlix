@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import status, HTTPException
+import random
 import re
 import csv
 
@@ -35,3 +36,10 @@ async def search(title: str, offset: int = 0, limit: int = 5):
         status_code=status.HTTP_404_NOT_FOUND,
         detail=f'The Query Had No Result !',
     )
+
+
+@app.get("/api/v1/score")
+async def search(comment: str):
+    return {"score": random.randrange(0,5)}
+    
+    #TODO: Must get the score from the sentiment model saved in pickle file
