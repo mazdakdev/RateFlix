@@ -1,2 +1,3 @@
 *.vscode
 *.csv
+*__pycache__
