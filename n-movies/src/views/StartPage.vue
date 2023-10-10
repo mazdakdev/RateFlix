@@ -59,7 +59,7 @@
                     </ion-item>
 
                     <ion-list class="searchlist" v-if="showResults">
-                        <ion-item  v-for="search in searchResult" :key="search.imdbID" @click="selectMovie(search)">{{ search.Title }}</ion-item>
+                        <ion-item  v-for="search in searchResult" :key="search.movieId" @click="selectMovie(search)">{{ search.title }}</ion-item>
                     </ion-list>
 
                     <ion-item class="mt-5"><ion-textarea  label="نظر شما" v-model="comment" labelPlacement="floating" placeholder="فیلم بسیار مهیج و جالبی هستش"></ion-textarea></ion-item>
@@ -126,15 +126,16 @@
     const searchMovies = async () => {
         if (searchQuery.value) {
             try {
-            const response = await axios.get('http://www.omdbapi.com', {
-                params: {
-                apikey: 'cbc2d94a',
-                s: searchQuery.value,
-                },
+                const response = await axios.get('http://localhost:8000/api/v1/movies', {
+                    params: {
+                        title: searchQuery.value,
+                    },
             });
             searchListClasses.value = '';
-            searchResult.value = response.data.Search.slice(0, -5);
+            searchResult.value = response.data.results;
+            console.log(searchResult.value)
             showResults.value = true;
+
             } catch (error) {
             console.error(error);
             // Handle the error here (e.g., display an error message)
@@ -144,10 +145,30 @@
         }
         };
 
-        const selectMovie = (movie: { Title: string; Poster: any }) => {
-        searchQuery.value = movie.Title;
-        showResults.value = false;
-        moviePoster.value = movie.Poster;
+    const selectMovie =  async (movie: { title: string; movieId: any }) => {
+
+        try {
+            searchQuery.value = movie.title;
+            showResults.value = false;
+
+            const response = await axios.get('https://omdbapi.com', {
+                    params: {
+                        apikey: 'cbc2d94a',
+                        s: movie.title,
+                    },
+                });
+
+            console.log(response.data)
+            
+            if(response.data.Search[0].Poster != "N/A"){
+                moviePoster.value = response.data.Search[0].Poster  ;
+            } else{
+                moviePoster.value = thumbnail;
+            }
+        }catch(error){
+            console.log(error)
+        }
+
     };
 
     const submitMovie = () => {
