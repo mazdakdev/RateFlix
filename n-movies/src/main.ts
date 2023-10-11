@@ -25,7 +25,7 @@ import '@/assets/css/tailwind.min.css'
 import './theme/variables.css';
 
 /* Global Constants */
-export const apiBaseUrl = "http://localhost:8000/"
+export const apiBaseUrl = "http://localhost:8000/api/v1/"
 
 
 const app = createApp(App)

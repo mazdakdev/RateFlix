@@ -51,7 +51,7 @@
                     <div class="flex flex-col items-center">
                         <img  :src="moviePoster"
                         alt="Poster" class="w-32 h-32 h-auto text-center" />
-                        <star-rating class="mt-1" read-only="true" star-size="20" rating="3.5" increment="0.01" rtl="true" text-class="hidden"></star-rating>
+                        <star-rating class="mt-1" read-only="true" star-size="20" :rating="predictedScore" increment="0.01" rtl="true" text-class="hidden"></star-rating>
                     </div>
                     <ion-item class="mt-5">
                         <ion-label position="stacked">جستجوی فیلم</ion-label>
@@ -65,7 +65,7 @@
                     <ion-item class="mt-5"><ion-textarea  label="نظر شما" v-model="comment" labelPlacement="floating" placeholder="فیلم بسیار مهیج و جالبی هستش"></ion-textarea></ion-item>
 
                     <div class="flex mt-10 justify-center">
-                        <ion-button color="tertiary" fill="outline">حدس امتیاز</ion-button>
+                        <ion-button color="tertiary" @click="predictScore" fill="outline">حدس امتیاز</ion-button>
                         <ion-button color="primary" @click="submitMovie" fill="outline">ثبت و ادامه</ion-button>
                     </div>
                 </ion-content>
@@ -114,6 +114,8 @@
     const currentMovieIndex = ref(0);
     const comment = ref('');
 
+    const predictedScore = ref(0);
+
     const openModal = (index: number) => {
         isOpen.value = true;
         currentMovieIndex.value = index;
@@ -128,7 +130,7 @@
         if (searchQuery.value) {
             try {
                 console.log(apiBaseUrl)
-                const response = await axios.get(apiBaseUrl + 'api/v1/movies', {
+                const response = await axios.get(apiBaseUrl + 'movies', {
                     params: {
                         title: searchQuery.value,
                     },
@@ -182,6 +184,17 @@
         searchQuery.value = '';
         isOpen.value = false;
     };
+
+    const  predictScore = async () => {
+        const response = await axios.get( apiBaseUrl + "score", {
+                    params: {
+                        comment: comment.value
+                    },
+                });
+
+        predictedScore.value = response.data.score;  
+        console.log(predictedScore.value)
+    }   
 
 </script>
   
