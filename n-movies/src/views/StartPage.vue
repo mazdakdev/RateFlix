@@ -12,11 +12,11 @@
         <ion-content class="ion-padding">
 
             <div class="grid md:grid-cols-3 grid-cols-1">
-                <ion-card v-for="(movie, index) in movies" :key="movie.id" class="flex flex-col">
+                <ion-card v-for="(movie, index) in movies" :key="movie.id" class="flex flex-col text-center md:text-right">
                                 <img alt="Silhouette of mountains" :src="movie.photo" />
                                 <ion-card-header>
                                     <ion-card-title class="text-xl">{{ movie.title }}</ion-card-title>
-                                    <ion-card-subtitle>{{ movie.score }}</ion-card-subtitle>
+                                    <ion-card-subtitle>{{ movie.score }}/5</ion-card-subtitle>
                                 </ion-card-header>
 
                                 <ion-card-content class="h-24 overflow-hidden">
