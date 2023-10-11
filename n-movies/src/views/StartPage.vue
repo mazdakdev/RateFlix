@@ -82,9 +82,10 @@
     import { IonButton, IonModal, IonItem, IonInput, IonLabel, IonTextarea} from '@ionic/vue';
     import { createOutline, arrowBackOutline, } from 'ionicons/icons';
     import thumbnail from '@/assets/images/thumbnail.svg'
-    import { ref, watch } from 'vue';
-    import axios from 'axios';
     import StarRating from 'vue-star-rating'
+    import { ref } from 'vue';
+    import axios from 'axios';
+    import { apiBaseUrl } from '@/main'
 
 
     interface Movie {
@@ -126,7 +127,8 @@
     const searchMovies = async () => {
         if (searchQuery.value) {
             try {
-                const response = await axios.get('http://localhost:8000/api/v1/movies', {
+                console.log(apiBaseUrl)
+                const response = await axios.get(apiBaseUrl + 'api/v1/movies', {
                     params: {
                         title: searchQuery.value,
                     },

@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import status, HTTPException
+from typing import Dict
 import random
 import re
 import csv
@@ -43,3 +44,15 @@ async def search(comment: str):
     return {"score": random.randrange(0,5)}
     
     #TODO: Must get the score from the sentiment model saved in pickle file
+
+
+@app.post("/api/v1/recommend")
+async def search(movies: Dict):
+    ok = True
+
+    if ok:
+        return {"code":0, "recommendations":[
+            {"id":"x", "title":"y"}
+        ]}
+    
+    #TODO: the dic must be sent from fronted

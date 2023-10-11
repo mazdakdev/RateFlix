@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router';
 
 import { IonicVue } from '@ionic/vue';
-
+``
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css';
 
@@ -21,9 +21,12 @@ import '@ionic/vue/css/flex-utils.css';
 import '@ionic/vue/css/display.css';
 import '@/assets/css/tailwind.min.css'
 
-
 /* Theme variables */
 import './theme/variables.css';
+
+/* Global Constants */
+export const apiBaseUrl = "http://localhost:8000/"
+
 
 const app = createApp(App)
   .use(IonicVue)
