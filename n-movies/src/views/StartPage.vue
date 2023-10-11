@@ -30,7 +30,7 @@
             </div>
 
             <div class="flex justify-center mt-5">
-                <ion-button shape="round" color="medium" fill="clear">
+                <ion-button @click="Predict" shape="round" color="medium" fill="clear">
                     ادامه <ion-icon class="mr-1" :icon="arrowBackOutline"></ion-icon>
                 </ion-button>
             </div>
@@ -93,15 +93,19 @@
         title: string;
         comment: string;
         photo: string;
-        score: string;
+        score: number;
     }
 
+    interface PushedMovie {
+        title: string;
+        score: number;
+    }
     const movies = ref<Movie[]>(Array.from({ length: 6 }, (_, index) => ({
         id: index + 1,
         title: 'بدون عنوان',
         comment: 'بدون نظر',
         photo: require('@/assets/images/post.png'),
-        score: '0/0'
+        score: 0
     })));
 
     const isOpen = ref(false);
@@ -179,13 +183,14 @@
         movies.value[currentMovieIndex.value].title = searchQuery.value;
         movies.value[currentMovieIndex.value].photo = moviePoster.value;
         movies.value[currentMovieIndex.value].comment = comment.value;
+        movies.value[currentMovieIndex.value].score = predictedScore.value;
         comment.value = 'بدون نظر.';
         moviePoster.value = thumbnail;
         searchQuery.value = '';
         isOpen.value = false;
     };
 
-    const  predictScore = async () => {
+    const predictScore = async () => {
         const response = await axios.get( apiBaseUrl + "score", {
                     params: {
                         comment: comment.value
@@ -195,6 +200,31 @@
         predictedScore.value = response.data.score;  
         console.log(predictedScore.value)
     }   
+
+    const Predict = async () => {
+
+        
+        const data = {
+          "movies": [] as PushedMovie[]
+        }
+
+        movies.value.forEach(movie => {
+            if(movie.title != "" && movie.title != "بدون عنوان"){
+                data.movies.push({
+                    title: movie.title,
+                    score: movie.score
+                })
+            }
+  
+            //TODO: send to Backend but the model must be completed first.
+        })
+
+        console.log(data)
+
+        // const response = await axios.post(apiBaseUrl + "/recommend", data)
+
+        console.log(data)
+    }
 
 </script>
   

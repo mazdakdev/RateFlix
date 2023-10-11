@@ -58,4 +58,4 @@ async def search(movies: Dict):
             {"id":"x", "title":"y"}
         ]}
     
-    #TODO: the dic must be sent from fronted
+    #TODO: the recieved dic must be used to predict
