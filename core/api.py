@@ -24,7 +24,10 @@ async def search(title: str, offset: int = 0, limit: int = 5):
             for cell in row:
                 if title.lower() in cell.lower():
                     if count >= offset:
-                        row[1] = re.sub(r'\(\d+\)', '', row[1]).strip()
+                        row[1] = re.sub(r'\(\d+\)', '', row[1]).strip() #remove (year) from title
+                        parts = row[1].split(",")
+                        if len(parts) == 2:
+                            row[1] = parts[1] + " " + parts[0]  # change foo, The to The foo
                         results.append(dict(zip(header, row)))
                     count += 1
                     break
