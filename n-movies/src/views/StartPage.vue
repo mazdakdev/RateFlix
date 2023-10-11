@@ -123,6 +123,13 @@
     const openModal = (index: number) => {
         isOpen.value = true;
         currentMovieIndex.value = index;
+        searchQuery.value = movies.value[currentMovieIndex.value].title;
+        showResults.value = false;
+        comment.value = movies.value[currentMovieIndex.value].comment;
+
+        if(movies.value[currentMovieIndex.value].photo != require('@/assets/images/post.png')){
+            moviePoster.value = movies.value[currentMovieIndex.value].photo;
+        }
     };
 
     const closeModal = () => {
@@ -184,7 +191,7 @@
         movies.value[currentMovieIndex.value].photo = moviePoster.value;
         movies.value[currentMovieIndex.value].comment = comment.value;
         movies.value[currentMovieIndex.value].score = predictedScore.value;
-        comment.value = 'بدون نظر.';
+        comment.value = '';
         moviePoster.value = thumbnail;
         searchQuery.value = '';
         isOpen.value = false;
