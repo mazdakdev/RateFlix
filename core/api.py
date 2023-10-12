@@ -31,10 +31,6 @@ async def search(title: str, offset: int = 0, limit: int = 5):
             for cell in row:
                 if title.lower() in cell.lower():
                     if count >= offset:
-                        row[1] = re.sub(r'\(\d+\)', '', row[1]).strip() #remove (year) from title
-                        parts = row[1].split(",")
-                        if len(parts) == 2:
-                            row[1] = parts[1] + " " + parts[0]  # change foo, The to The foo
                         results.append(dict(zip(header, row)))
                     count += 1
                     break
@@ -50,13 +46,13 @@ async def search(title: str, offset: int = 0, limit: int = 5):
 
 
 @app.get("/api/v1/score")
-async def search(comment: str):
+async def analyse(comment: str):
     return {"score": random.randrange(0,5)}
     
     #TODO: Must get the score from the sentiment model saved in pickle file
 
 @app.post("/api/v1/recommend")
-async def search(movies: Movie):
+async def recommend(movies: Movie):
     user_input = movies.movies
     recommended_list = recommender.recommend(user_input).to_json(orient="records") 
 
