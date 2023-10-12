@@ -79,18 +79,3 @@ class MovieRecommender:
         return self.movies_df.loc[self.movies_df['movieId'].isin(recommendation_df.head(10)['movieId'].tolist())]
 
 
-
-# Example Usage:
-movies_file = 'movies.csv'
-ratings_file = 'ratings.csv'
-recommender = MovieRecommender(movies_file, ratings_file)
-
-user_input = [
-    {'title': 'Breakfast Club, The', 'rating': 5},
-    {'title': 'Toy Story', 'rating': 3.5},
-    {'title': 'Jumanji', 'rating': 2},
-    {'title': "Pulp Fiction", 'rating': 5},
-    {'title': 'Akira', 'rating': 4.5}]
-
-recommendations = recommender.recommend(user_input)
-print(recommendations)

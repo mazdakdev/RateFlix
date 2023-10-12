@@ -1,17 +1,24 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Body
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import status, HTTPException
-from typing import Dict
+from typing import Dict, Any
+from models.recommender import MovieRecommender
+from pydantic import BaseModel
 import random
 import re
 import csv
+import json
 
 app = FastAPI()
+recommender = MovieRecommender("models/movies.csv", "models/ratings.csv")
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=['http://localhost:8081']
 )
+
+class Movie(BaseModel):
+    movies: list
 
 @app.get("/api/v1/movies")
 async def search(title: str, offset: int = 0, limit: int = 5):
@@ -48,14 +55,11 @@ async def search(comment: str):
     
     #TODO: Must get the score from the sentiment model saved in pickle file
 
-
 @app.post("/api/v1/recommend")
-async def search(movies: Dict):
-    ok = True
+async def search(movies: Movie):
+    user_input = movies.movies
+    recommended_list = recommender.recommend(user_input).to_json(orient="records") 
 
-    if ok:
-        return {"code":0, "recommendations":[
-            {"id":"x", "title":"y"}
-        ]}
-    
-    #TODO: the recieved dic must be used to predict
+    return recommended_list
+
+#TODO: the csv must be preprocessed before running 

@@ -4,7 +4,7 @@
       <ion-menu content-id="main-content" type="overlay" side="start">
         <ion-content>
           <ion-list>
-              <ion-list-header><img src="@/assets/images/rateflix1.png"  class="w-32"></ion-list-header>
+              <ion-list-header><img src="@/assets/images/rateflix1.png" class="w-32"></ion-list-header>
   
             <ion-note class="mr-3">بگو چی دوست داری، بهت می گیم چی دوست داری</ion-note>
 
