@@ -4,10 +4,11 @@
       <ion-menu content-id="main-content" type="overlay" side="start">
         <ion-content>
           <ion-list>
-            <ion-list-header>nMovies</ion-list-header>
-            <ion-note>بگو چی دوست داری، بهت می گیم چی دوست داری</ion-note>
+              <ion-list-header><img src="@/assets/images/rateflix1.png"  class="w-32"></ion-list-header>
+  
+            <ion-note class="mr-3">بگو چی دوست داری، بهت می گیم چی دوست داری</ion-note>
 
-            <ion-menu-toggle  auto-hide="false" v-for="(p, i) in appPages" :key="i">
+            <ion-menu-toggle auto-hide="false" v-for="(p, i) in appPages" :key="i">
               <ion-item @click="selectedIndex = i" router-direction="root" :router-link="p.url" lines="none" detail="false" class="hydrated" :class="{ selected: selectedIndex === i }">
                 <ion-icon aria-hidden="true" slot="start" :ios="p.iosIcon" :md="p.mdIcon"></ion-icon>
                 <ion-label>{{ p.title }}</ion-label>
