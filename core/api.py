@@ -56,6 +56,4 @@ async def recommend(movies: Movie):
     user_input = movies.movies
     recommended_list = recommender.recommend(user_input).to_json(orient="records") 
 
-    return recommended_list
-
-#TODO: the csv must be preprocessed before running 
+    return recommended_list 
