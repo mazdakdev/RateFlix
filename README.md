@@ -3,15 +3,11 @@
 This full stack application allows users to browse movies, write reviews, and receive personalized recommendations. It utilizes collaborative filtering for recommendations and LSTM neural networks for sentiment analysis.
 
 ## Technologies
+**The Recommender System / NLP Sentiment Analysis:**
 
 **Frontend:**
 
-
 **Backend:** 
-
-
-**The Recommender System / NLP Sentiment Analysis**
-
 
 **Deployment:**
 
