@@ -83,10 +83,10 @@
     import { createOutline, arrowBackOutline, } from 'ionicons/icons';
     import thumbnail from '@/assets/images/thumbnail.svg'
     import StarRating from 'vue-star-rating'
+    import { useIonRouter } from '@ionic/vue'
+    import { apiBaseUrl } from '@/main'
     import { ref } from 'vue';
     import axios from 'axios';
-    import { apiBaseUrl } from '@/main'
-
 
     interface Movie {
         id: number;
@@ -109,6 +109,7 @@
     })));
 
     const isOpen = ref(false);
+    const router = useIonRouter()
     const searchQuery = ref('');
     const searchListClasses = ref('');
     const searchResult = ref<Movie[]>([]);
@@ -225,12 +226,9 @@
   
             //TODO: send to Backend but the model must be completed first.
         })
-
-        console.log(data)
+        router.push('/results') 
 
         // const response = await axios.post(apiBaseUrl + "/recommend", data)
-
-        console.log(data)
     }
 
 </script>
