@@ -98,7 +98,7 @@
 
     interface PushedMovie {
         title: string;
-        score: number;
+        rating: number;
     }
     const movies = ref<Movie[]>(Array.from({ length: 6 }, (_, index) => ({
         id: index + 1,
@@ -211,7 +211,6 @@
 
     const Predict = async () => {
 
-        
         const data = {
           "movies": [] as PushedMovie[]
         }
@@ -220,16 +219,19 @@
             if(movie.title != "" && movie.title != "بدون عنوان"){
                 data.movies.push({
                     title: movie.title,
-                    score: movie.score
+                    rating: movie.score
                 })
             }
-  
-            //TODO: send to Backend but the model must be completed first.
         })
-        router.push('/results') 
 
-        // const response = await axios.post(apiBaseUrl + "/recommend", data)
+        const response = await axios.post(apiBaseUrl + "recommend", data).catch(error => {
+            console.log(error)
+        })
+
+        console.log(response.data)
+
     }
+  
 
 </script>
   

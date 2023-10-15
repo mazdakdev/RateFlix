@@ -14,7 +14,9 @@ recommender = MovieRecommender("models/movies.csv", "models/ratings.csv")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=['http://localhost:8081']
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 class Movie(BaseModel):
@@ -23,7 +25,7 @@ class Movie(BaseModel):
 @app.get("/api/v1/movies")
 async def search(title: str, offset: int = 0, limit: int = 5):
     results = []
-    with open('../models/movies.csv', 'r') as file:
+    with open('models/movies.csv', 'r') as file:
         csv_reader = csv.reader(file)
         header = next(csv_reader)
         count = 0
@@ -51,9 +53,10 @@ async def analyse(comment: str):
     
     #TODO: Must get the score from the sentiment model saved in pickle file
 
+
 @app.post("/api/v1/recommend")
 async def recommend(movies: Movie):
-    user_input = movies.movies
-    recommended_list = recommender.recommend(user_input).to_json(orient="records") 
+        user_input = movies.movies
+        recommended_list = recommender.recommend(user_input).to_json(orient="records") 
 
-    return recommended_list 
+        return recommended_list 

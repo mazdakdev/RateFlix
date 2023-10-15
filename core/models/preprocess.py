@@ -14,3 +14,5 @@ ratings_df = ratings_df.drop('timestamp', axis=1)
 
 movies_df.to_csv("movies.csv", index=False)
 ratings_df.to_csv("ratings.csv", index=False)
+
+#TODO: Foo, the must be The Foo
