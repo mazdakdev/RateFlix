@@ -81,6 +81,7 @@
     import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonIcon} from '@ionic/vue';
     import { IonButton, IonModal, IonItem, IonInput, IonLabel, IonTextarea} from '@ionic/vue';
     import { createOutline, arrowBackOutline, } from 'ionicons/icons';
+    import { useApiResultsStore } from '@/store/apiResults'
     import thumbnail from '@/assets/images/thumbnail.svg'
     import StarRating from 'vue-star-rating'
     import { useIonRouter } from '@ionic/vue'
@@ -228,7 +229,11 @@
             console.log(error)
         })
 
-        console.log(response.data)
+        // Saving response with pinia to acess it in /results
+        const apiResultsStore = useApiResultsStore()
+        apiResultsStore.setResults(response.data)
+
+        router.push("/results")
 
     }
   

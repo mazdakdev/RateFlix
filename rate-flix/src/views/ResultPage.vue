@@ -16,7 +16,7 @@
                 <tbody>
                     <tr class="border-b bg-gray-900 border-gray-700">
                         <th scope="row" class="px-6 py-4 font-medium  whitespace-nowrap text-gray-200">
-                          #1 toy story
+                         <button  @click="test"> #1 toy story </button>
                         </th>
                  
                     </tr>
@@ -44,6 +44,12 @@
   
   <script setup lang="ts">
   import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+  import { useApiResultsStore } from '@/store/apiResults'
+
+  const test = () => {
+    const apiResultsStore = useApiResultsStore()
+    console.log(apiResultsStore.results)
+  }
   </script>
   
   <style scoped>

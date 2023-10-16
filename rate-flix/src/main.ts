@@ -24,14 +24,19 @@ import '@/assets/css/tailwind.min.css'
 /* Theme variables */
 import './theme/variables.css';
 
+/* Pinia / State Management */
+import { createPinia } from 'pinia'
+
 /* Global Constants */
 export const apiBaseUrl = "http://localhost:8000/api/v1/"
 
+const pinia = createPinia()
 
 const app = createApp(App)
   .use(IonicVue)
-  .use(router);
-  
+  .use(router)
+  .use(pinia);
+
 router.isReady().then(() => {
   app.mount('#app');
 });
