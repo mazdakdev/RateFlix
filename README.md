@@ -42,3 +42,6 @@ This full stack application allows users to browse movies, write reviews, and re
 
 ## Deploy manualy
 
+
+## Contribution
+All type of contributions are welcommed.
