@@ -9,10 +9,10 @@ movies_df['title'] = movies_df.title.str.replace('(\(\d\d\d\d\))', '', regex=Tru
 movies_df['title'] = movies_df['title'].apply(lambda x: x.strip())
 movies_df = movies_df.drop('genres', axis=1)
 
+movies_df['title'] = movies_df['title'].apply(lambda x: x.split(",")[-1].strip())
 
+movies_df = movies_df.drop('genres', axis=1)
 ratings_df = ratings_df.drop('timestamp', axis=1)
 
 movies_df.to_csv("movies.csv", index=False)
 ratings_df.to_csv("ratings.csv", index=False)
-
-#TODO: Foo, the must be The Foo
