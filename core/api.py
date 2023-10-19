@@ -2,7 +2,7 @@ from fastapi import FastAPI, Body
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import status, HTTPException
 from typing import Dict, Any
-from models.recommender import MovieRecommender
+from models.recommender.helper import MovieRecommender
 from pydantic import BaseModel
 import random
 import re
@@ -10,7 +10,7 @@ import csv
 import json
 
 app = FastAPI()
-recommender = MovieRecommender("models/movies.csv", "models/ratings.csv")
+recommender = MovieRecommender("models/recommender/movies.csv", "models/recommender/ratings.csv")
 
 app.add_middleware(
     CORSMiddleware,
