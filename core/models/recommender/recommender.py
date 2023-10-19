@@ -51,7 +51,7 @@ class MovieRecommender:
 
         return recommendation_df.sort_values(by='weighted average recommendation score', ascending=False)
 
-    def recommend(self, user_input):
+    def recommend(self, user_input: list) -> dict:
         input_movies = self.get_user_input_dataframe(user_input)
         user_subset = self.filter_user_subset(input_movies)
         user_subset_group = user_subset.groupby(['userId'])

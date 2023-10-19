@@ -1,8 +1,16 @@
 import torch
 import torch.nn as nn
 import numpy as np
-import re
+from utils import preprocess_string, padding_
 import pickle
+
+is_cuda = torch.cuda.is_available()
+
+if is_cuda:
+    device = torch.device("cuda")
+    
+else:
+    device = torch.device("cpu") 
 
 class SentimentRNN(nn.Module):
     def __init__(
@@ -10,6 +18,7 @@ class SentimentRNN(nn.Module):
         no_layers,
         vocab_size,
         hidden_dim,
+        output_dim,
         embedding_dim,
         drop_prob=0.5,
         bidirectional=False,
@@ -18,7 +27,6 @@ class SentimentRNN(nn.Module):
 
         self.output_dim = output_dim
         self.hidden_dim = hidden_dim
-
         self.no_layers = no_layers
         self.vocab_size = vocab_size
 
@@ -37,7 +45,7 @@ class SentimentRNN(nn.Module):
         self.dropout = nn.Dropout(0.3)
 
         # linear and sigmoid layer
-        self.fc = nn.Linear(self.hidden_dim, output_dim)
+        self.fc = nn.Linear(self.hidden_dim, self.output_dim)
         self.sig = nn.Sigmoid()
 
     def forward(self, x, hidden):
@@ -72,69 +80,54 @@ class SentimentRNN(nn.Module):
         hidden = (h0, c0)
         return hidden
 
-with open("vocab.pkl", "rb") as f:
-    vocab = pickle.load(f)
+class CommentAnalyzer:
+    def __init__(self, model_path, vocab_path, is_gpu=False):
 
-is_cuda = torch.cuda.is_available()
+        with open(vocab_path, "rb") as f:
+            self.vocab = pickle.load(f)
 
-if is_cuda:
-    device = torch.device("cuda")
-    print("GPU is available")
-else:
-    device = torch.device("cpu")
-    print("GPU not available, CPU used")
+        no_layers = 2
+        vocab_size = len(self.vocab) + 1  # extra 1 for padding
+        embedding_dim = 64
+        hidden_dim = 256
 
-def preprocess_string(s):
-    s = re.sub(r"[^\w\s]", "", s)
-    s = re.sub(r"\s+", "", s)
-    s = re.sub(r"\d", "", s)
+        self.model = SentimentRNN(
+            no_layers=no_layers,
+            vocab_size=vocab_size,
+            hidden_dim=hidden_dim,
+            embedding_dim=embedding_dim,
+            output_dim=1,
+            drop_prob=0.5,
+        )
 
-    return s
+        if is_gpu:
+            self.model.load_state_dict(torch.load(model_path))
 
-def padding_(sentences, seq_len):
-    features = np.zeros((len(sentences), seq_len), dtype=int)
-    for ii, review in enumerate(sentences):
-        if len(review) != 0:
-            features[ii, -len(review) :] = np.array(review)[:seq_len]
-    return features
+        else:
+            self.model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))      
 
-
-no_layers = 2
-vocab_size = len(vocab) + 1  # extra 1 for padding
-embedding_dim = 64
-output_dim = 1
-hidden_dim = 256
-
-model = SentimentRNN(
-    no_layers=no_layers,
-    vocab_size=vocab_size,
-    hidden_dim=hidden_dim,
-    embedding_dim=embedding_dim,
-    drop_prob=0.5,
-)
-
-model.load_state_dict(torch.load("state_dict.pt", map_location=torch.device('cpu')))
-
-model.eval()
-
-def predict_text(text):
-    word_seq = np.array(
-        [
-            vocab[preprocess_string(word)]
-            for word in text.split()
-            if preprocess_string(word) in vocab.keys()
-        ]
-    )
-    word_seq = np.expand_dims(word_seq, axis=0)
-    pad = torch.from_numpy(padding_(word_seq, 500))
-    inputs = pad.to(device)
-    batch_size = 1
-    h = model.init_hidden(batch_size)
-    h = tuple([each.data for each in h])
-    output, h = model(inputs, h)
-    return output.item()*5
-
-print(predict_text("Awesome"))
+        self.model.eval()
 
 
-#TODO: OOP
+    def predict(self, text: str) -> float:
+        """
+        Method to predict texts score from external apps
+        """
+
+        word_seq = np.array(
+            [
+                self.vocab[preprocess_string(word)]
+                for word in text.split()
+                if preprocess_string(word) in self.vocab.keys()
+            ]
+        )
+
+        word_seq = np.expand_dims(word_seq, axis=0)
+        pad = torch.from_numpy(padding_(word_seq, 500))
+        inputs = pad.to(device)
+        batch_size = 1
+        h = self.model.init_hidden(batch_size)
+        h = tuple([each.data for each in h])
+        output, h = self.model(inputs, h)
+
+        return output.item() * 5 # Converting to 0-5 scale

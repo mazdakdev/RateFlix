@@ -1,4 +1,44 @@
+
+# vscode settings
 *.vscode
-*.csv
+
+# caches
 *__pycache__
+*.vector_cache
+
+# Models, Datasets etc...
+*.csv
 *.pt
+*.zip
+
+*~
+*.sw[mnpcod]
+.tmp
+*.tmp
+*.tmp.*
+*.sublime-project
+*.sublime-workspace
+/rate-flix/.DS_Store
+/rate-flix/Thumbs.db
+/rate-flix/UserInterfaceState.xcuserstate
+$RECYCLE.BIN/
+
+*.log
+/rate-flix/log.txt
+npm-debug.log*
+
+/rate-flix/.idea
+/rate-flix/.ionic
+/rate-flix.sass-cache
+/rate-flix/.sourcemaps
+/rate-flix/.versions
+/rate-flix/.vscode/*
+/rate-flix/coverage
+/rate-flix/node_modules
+/rate-flix/platforms
+/rate-flix/plugins
+/rate-flix/www
+
+*dist
+
+
