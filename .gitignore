@@ -40,5 +40,4 @@ npm-debug.log*
 /rate-flix/www
 
 *dist
-
-
+*venv

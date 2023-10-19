@@ -1,7 +1,6 @@
 from fastapi import FastAPI, Body
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import status, HTTPException
-from typing import Dict, Any
 from models.recommender.helper import MovieRecommender
 from models.sentimentLSTM.helper import CommentAnalyzer
 from pydantic import BaseModel
