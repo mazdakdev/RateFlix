@@ -196,6 +196,7 @@
         comment.value = '';
         moviePoster.value = thumbnail;
         searchQuery.value = '';
+        predictedScore.value = 0
         isOpen.value = false;
     };
 
@@ -231,7 +232,7 @@
 
         // Saving response with pinia to acess it in /results
         const apiResultsStore = useApiResultsStore()
-        apiResultsStore.setResults(response.data)
+        apiResultsStore.setResults(JSON.parse(response.data))
 
         router.push("/results")
 

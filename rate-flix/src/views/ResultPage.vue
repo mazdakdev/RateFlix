@@ -14,23 +14,10 @@
         <div class="relative overflow-x-auto">
             <table class="w-full text-sm text-left text-gray-400 shadow-lg">
                 <tbody>
-                    <tr class="border-b bg-gray-900 border-gray-700">
+                    <tr class="border-b bg-gray-900 border-gray-700" v-for="movie in movies">
                         <th scope="row" class="px-6 py-4 font-medium  whitespace-nowrap text-gray-200">
-                         <button  @click="test"> #1 toy story </button>
+                         <button>{{ movie.title }} </button>
                         </th>
-                 
-                    </tr>
-                    <tr class="border-b bg-gray-900 border-gray-700">
-                        <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-white">
-                           #2 jumanji
-                        </th>
-                  
-                    </tr>
-                    <tr class="bg-gray-900">
-                        <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-white">
-                            #3 better call saul
-                        </th>
-                   
                     </tr>
                 </tbody>
             </table>
@@ -43,13 +30,17 @@
   </template>
   
   <script setup lang="ts">
-  import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
-  import { useApiResultsStore } from '@/store/apiResults'
+    import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+    import { useApiResultsStore } from '@/store/apiResults'
+    import { ref, onMounted} from 'vue'
 
-  const test = () => {
+    const movies = ref([]) 
     const apiResultsStore = useApiResultsStore()
-    console.log(apiResultsStore.results)
-  }
+
+    onMounted(() => {
+      movies.value = apiResultsStore.results
+    })
+
   </script>
   
   <style scoped>
