@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import numpy as np
-from utils import preprocess_string, padding_
+from . import utils
 import pickle
 
 is_cuda = torch.cuda.is_available()
@@ -116,14 +116,14 @@ class CommentAnalyzer:
 
         word_seq = np.array(
             [
-                self.vocab[preprocess_string(word)]
+                self.vocab[utils.preprocess_string(word)]
                 for word in text.split()
-                if preprocess_string(word) in self.vocab.keys()
+                if utils.preprocess_string(word) in self.vocab.keys()
             ]
         )
 
         word_seq = np.expand_dims(word_seq, axis=0)
-        pad = torch.from_numpy(padding_(word_seq, 500))
+        pad = torch.from_numpy(utils.padding_(word_seq, 500))
         inputs = pad.to(device)
         batch_size = 1
         h = self.model.init_hidden(batch_size)

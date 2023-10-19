@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi import status, HTTPException
 from typing import Dict, Any
 from models.recommender.helper import MovieRecommender
+from models.sentimentLSTM.helper import CommentAnalyzer
 from pydantic import BaseModel
 import random
 import re
@@ -10,7 +11,16 @@ import csv
 import json
 
 app = FastAPI()
-recommender = MovieRecommender("models/recommender/movies.csv", "models/recommender/ratings.csv")
+
+recommender = MovieRecommender(
+        movies_df="models/recommender/movies.csv", 
+        ratings_df="models/recommender/ratings.csv"
+    )
+
+comment_analyzer = CommentAnalyzer(
+    model_path = "models/sentimentLSTM/state_dict.pt",
+    vocab_path = "models/sentimentLSTM/vocab.pkl"
+)
 
 app.add_middleware(
     CORSMiddleware,
@@ -25,7 +35,7 @@ class Movie(BaseModel):
 @app.get("/api/v1/movies")
 async def search(title: str, offset: int = 0, limit: int = 5):
     results = []
-    with open('models/movies.csv', 'r') as file:
+    with open('models/recommender/movies.csv', 'r') as file:
         csv_reader = csv.reader(file)
         header = next(csv_reader)
         count = 0
@@ -49,10 +59,11 @@ async def search(title: str, offset: int = 0, limit: int = 5):
 
 @app.get("/api/v1/score")
 async def analyse(comment: str):
-    return {"score": random.randrange(0,5)}
-    
-    #TODO: Must get the score from the sentiment model saved in pickle file
+    score = comment_analyzer.predict(comment)
+    score = round(score, 2)
 
+    return {"score": score}
+    
 
 @app.post("/api/v1/recommend")
 async def recommend(movies: Movie):
