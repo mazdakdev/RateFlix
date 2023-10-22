@@ -14,7 +14,7 @@
         <div class="relative overflow-x-auto">
             <table class="w-full text-sm text-left text-gray-400 shadow-lg">
                 <tbody>
-                    <tr class="border-b bg-gray-900 border-gray-700" v-for="movie in movies">
+                    <tr class="border-b bg-gray-900 border-gray-700" v-for="(movie, index) in movies" :key="index">
                         <th scope="row" class="px-6 py-4 font-medium  whitespace-nowrap text-gray-200">
                          <button>{{ movie.title }} </button>
                         </th>

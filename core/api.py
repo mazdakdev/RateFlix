@@ -65,7 +65,7 @@ async def analyse(comment: str):
     score = comment_analyzer.predict(en_comment)
     score = round(score, 2)
 
-    return {"score": en_comment}
+    return {"score": score}
     
 
 @app.post("/api/v1/recommend")

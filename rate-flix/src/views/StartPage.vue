@@ -128,6 +128,7 @@
         searchQuery.value = movies.value[currentMovieIndex.value].title;
         showResults.value = false;
         comment.value = movies.value[currentMovieIndex.value].comment;
+        predictedScore.value = movies.value[currentMovieIndex.value].score;
 
         if(movies.value[currentMovieIndex.value].photo != require('@/assets/images/post.png')){
             moviePoster.value = movies.value[currentMovieIndex.value].photo;
