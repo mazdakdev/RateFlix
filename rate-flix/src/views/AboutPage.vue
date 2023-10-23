@@ -10,9 +10,8 @@
       </ion-header>
 
       <ion-content class="ion-padding">
-        <h1>About This App</h1>
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Exercitationem voluptatum ipsa nisi. Commodi recusandae voluptatem quidem ut, magnam minima deserunt temporibus alias ipsum praesentium dolore, eveniet aut illum libero modi?</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro praesentium omnis qui suscipit quis officiis enim aperiam ratione sapiente veritatis explicabo expedita, pariatur illo eius consequuntur repellendus optio. Nobis, veritatis.</p>
+        <h1>درباره این برنامه</h1>
+        <p class="mt-4">توسط این برنامه شما می توانید فیلم های مورد علاقه ی خود را انتخاب کرده برای انها نظری بنویسید و بعدش ما یه لیستی از فیلم هایی که فکر می کنیم شما دوست دارید رو در اخیتارتون می زاریم</p>
       </ion-content>
 
     </ion-page>

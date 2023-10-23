@@ -62,7 +62,7 @@ const appPages = [
     mdIcon: informationCircleOutline,
   },  {
     title: 'توسعه دهندگان',
-    url: '#',
+    url: '/team',
     iosIcon: peopleOutline,
     mdIcon: peopleOutline,
   },
