@@ -8,11 +8,19 @@
   
             <ion-note class="mr-3">بگو چی دوست داری، بهت می گیم چی دوست داری</ion-note>
 
-            <ion-menu-toggle auto-hide="false" v-for="(p, i) in appPages" :key="i">
-              <ion-item @click="selectedIndex = i" router-direction="root" :router-link="p.url" lines="none" detail="false" class="hydrated" :class="{ selected: selectedIndex === i }">
-                <ion-icon aria-hidden="true" slot="start" :ios="p.iosIcon" :md="p.mdIcon"></ion-icon>
-                <ion-label>{{ p.title }}</ion-label>
-              </ion-item>
+            <ion-menu-toggle auto-hide="false">
+              <div v-for="(p, i) in appPages" :key="i">
+                <ion-item @click="selectedIndex = i" router-direction="root" :router-link="p.url" lines="none" detail="false" class="hydrated" :class="{ selected: selectedIndex === i }">
+                  <ion-icon aria-hidden="true" slot="start" :ios="p.iosIcon" :md="p.mdIcon"></ion-icon>
+                  <ion-label>{{ p.title }}</ion-label>
+                </ion-item>
+              </div>
+
+              <ion-item @click="openGithub"  lines="none" class="hydrated" :class="{ selected: selectedIndex === 3 }">
+                <ion-icon aria-hidden="true" slot="start" :ios="logoGithub" :md="logoGithub"></ion-icon>
+                <ion-label>سورس کد</ion-label>
+            </ion-item>
+
             </ion-menu-toggle>
           </ion-list>
         </ion-content>
@@ -23,61 +31,63 @@
 </template>
 
 <script setup lang="ts">
-import {
-  IonApp,
-  IonContent,
-  IonIcon,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonListHeader,
-  IonMenu,
-  IonMenuToggle,
-  IonNote,
-  IonRouterOutlet,
-  IonSplitPane,
-} from '@ionic/vue';
-import { ref } from 'vue';
-import {
-  informationCircleOutline,
-  starHalfOutline,
-  logoGithub,
-  peopleOutline
+  import {
+    IonApp,
+    IonContent,
+    IonIcon,
+    IonItem,
+    IonLabel,
+    IonList,
+    IonListHeader,
+    IonMenu,
+    IonMenuToggle,
+    IonNote,
+    IonRouterOutlet,
+    IonSplitPane,
+  } from '@ionic/vue';
+  import { ref } from 'vue';
+  import {
+    informationCircleOutline,
+    starHalfOutline,
+    logoGithub,
+    peopleOutline
 
-} from 'ionicons/icons';
+  } from 'ionicons/icons';
 
-document.dir = "rtl";
-const selectedIndex = ref(0);
-const appPages = [
-  {
-    title: 'شروع',
-    url: '/start',
-    iosIcon: starHalfOutline,
-    mdIcon: starHalfOutline,
-  },
-  {
-    title: 'درباره این برنامه',
-    url: '/about',
-    iosIcon: informationCircleOutline,
-    mdIcon: informationCircleOutline,
-  },  {
-    title: 'توسعه دهندگان',
-    url: '/team',
-    iosIcon: peopleOutline,
-    mdIcon: peopleOutline,
-  },
-  {
-    title: 'سورس کد',
-    url: '#',
-    iosIcon: logoGithub,
-    mdIcon: logoGithub,
-  },
-];
+  import { Browser } from '@capacitor/browser';
 
-const path = window.location.pathname.split('/')[1];
-if (path !== undefined) {
-  selectedIndex.value = appPages.findIndex((page) => page.title.toLowerCase() === path.toLowerCase());
-}
+  document.dir = "rtl";
+  const selectedIndex = ref(0);
+  const appPages = [
+    {
+      title: 'شروع',
+      url: '/start',
+      iosIcon: starHalfOutline,
+      mdIcon: starHalfOutline,
+    },
+    {
+      title: 'درباره این برنامه',
+      url: '/about',
+      iosIcon: informationCircleOutline,
+      mdIcon: informationCircleOutline,
+    },  {
+      title: 'توسعه دهندگان',
+      url: '/team',
+      iosIcon: peopleOutline,
+      mdIcon: peopleOutline,
+    },
+  ];
+
+  const path = window.location.pathname.split('/')[1];
+  if (path !== undefined) {
+    selectedIndex.value = appPages.findIndex((page) => page.title.toLowerCase() === path.toLowerCase());
+  }
+
+  const openGithub = async () => {
+    selectedIndex.value = 3;
+    Browser.open({ url: 'https://github.com/mazdakdev/RateFlix' });
+
+  }
 </script>
 
 
