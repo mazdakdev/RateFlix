@@ -213,29 +213,37 @@
     }   
 
     const Predict = async () => {
+        const moviesStatus = movies.value.every(movie => movie.title === 'بدون عنوان' && movie.comment == 'بدون نظر');
+        
+        if(moviesStatus){
+            alert("باید قبل از ادامه حداقل یک فیلم اضافه کنید.")
+        }
+        
+        else{ 
+            const data = {
+                "movies": [] as PushedMovie[]
+            }
 
-        const data = {
-          "movies": [] as PushedMovie[]
+            movies.value.forEach(movie => {
+                if(movie.title != "" && movie.title != "بدون عنوان"){
+                    data.movies.push({
+                        title: movie.title,
+                        rating: movie.score
+                    })
+                }
+            })
+
+            const response = await axios.post(apiBaseUrl + "recommend", data).catch(error => {
+                console.log(error)
+            })
+
+            // Saving response with pinia to acess it in /results
+            const apiResultsStore = useApiResultsStore()
+            apiResultsStore.setResults(JSON.parse(response.data))
+
+            router.push("/results")
         }
 
-        movies.value.forEach(movie => {
-            if(movie.title != "" && movie.title != "بدون عنوان"){
-                data.movies.push({
-                    title: movie.title,
-                    rating: movie.score
-                })
-            }
-        })
-
-        const response = await axios.post(apiBaseUrl + "recommend", data).catch(error => {
-            console.log(error)
-        })
-
-        // Saving response with pinia to acess it in /results
-        const apiResultsStore = useApiResultsStore()
-        apiResultsStore.setResults(JSON.parse(response.data))
-
-        router.push("/results")
 
     }
   
