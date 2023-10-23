@@ -15,6 +15,7 @@
     "@capacitor/browser": "^5.1.0",
     "@capacitor/core": "5.4.1",
     "@capacitor/haptics": "5.0.6",
+    "@capacitor/ios": "5.4.1",
     "@capacitor/keyboard": "5.0.6",
     "@capacitor/status-bar": "5.0.6",
     "@ionic/vue": "^7.0.0",
