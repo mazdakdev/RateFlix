@@ -20,6 +20,7 @@ import '@ionic/vue/css/text-transformation.css';
 import '@ionic/vue/css/flex-utils.css';
 import '@ionic/vue/css/display.css';
 import '@/assets/css/tailwind.min.css'
+import '@/assets/fonts/shabnam/main.css'
 
 /* Theme variables */
 import './theme/variables.css';
