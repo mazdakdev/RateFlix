@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'nMovies',
+  appId: 'com.rateflix',
+  appName: 'RateFlix',
   webDir: 'dist',
   server: {
     androidScheme: 'https'

@@ -19,7 +19,7 @@
 
             <div class="lg:gap-xl-12 grid gap-x-6 md:grid-cols-3 xl:grid-cols-3">
                 <div class="mb-12">
-                    <img src="https://avatars.githubusercontent.com/u/60855141?v=4"
+                    <img src="@/assets/images/mazdak.png"
                     class="mx-auto mb-4 rounded-full shadow-lg dark:shadow-black/20" alt="" style="max-width: 100px" />
 
                     <p class="mb-2 font-bold">Mazdak Pakaghideh</p>
@@ -27,7 +27,7 @@
                 </div>
 
                 <div class="mb-12">
-                    <img src="https://avatars.githubusercontent.com/u/117342306?v=4"
+                    <img src="@/assets/images/mahbod.jpg"
                     class="mx-auto mb-4 rounded-full shadow-lg dark:shadow-black/20" alt="" style="max-width: 100px" />
 
                     <p class="mb-2 font-bold">Mahbod ZamanPour</p>
