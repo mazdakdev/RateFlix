@@ -179,7 +179,7 @@
             console.log(response.data)
             
             if(response.data.Search[0].Poster != "N/A"){
-                moviePoster.value = response.data.Search[0].Poster  ;
+                moviePoster.value = response.data.Search[0].Poster;
             } else{
                 moviePoster.value = thumbnail;
             }

@@ -11,12 +11,18 @@
 
     <ion-content class="ion-padding">
       
-      <div class="relative overflow-x-auto" dir="ltr">
-        <ion-list>
-          <ion-item v-for="(movie, index) in movies" :key="index">
-            <ion-label>#{{ index + 1}} {{ movie.title }}</ion-label>
-          </ion-item>
-        </ion-list>
+      <div class="grid md:grid-cols-3 grid-cols-1">
+                <ion-card v-for="(movie, index) in movies" :key="index" class="flex flex-col text-center md:text-right">
+                                <img alt="movie's poster" :src="movie.poster" />
+                                <ion-card-header>
+                                    <ion-card-title class="text-xl">{{ movie.title }}</ion-card-title>
+                                    <ion-card-subtitle> سال ساخت: {{ movie.year }}</ion-card-subtitle>
+                                </ion-card-header>
+
+                                <ion-card-content class="h-24 overflow-hidden">
+                                    {{ movie.genres }}
+                                </ion-card-content>
+                </ion-card>
       </div>
 
     </ion-content>
@@ -27,16 +33,30 @@
 
 <script setup lang="ts">
   import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
-  import { IonItem, IonLabel, IonList } from '@ionic/vue';
   import { useApiResultsStore } from '@/store/apiResults'
   import { ref, onMounted} from 'vue'
+  import axios from 'axios';
+  
 
   const movies = ref([]) 
   const apiResultsStore = useApiResultsStore()
 
-  onMounted(() => {
+  onMounted(async () => {
     movies.value = apiResultsStore.results
-  })
+
+      for (const movie of movies.value) {
+        const response = await axios.get('https://omdbapi.com', {
+          params: {
+            apikey: 'cbc2d94a',
+            s: movie['title'],
+          },});
+      
+        movie.poster = response.data.Search[0].Poster;
+
+      }
+  });
+
+
 
 </script>
 
