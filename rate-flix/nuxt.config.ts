@@ -2,7 +2,10 @@
 
 export default defineNuxtConfig({
   modules: ['@nuxtjs/ionic'],
-  css: ['@/assets/css/ionic.css'],
+  css: [
+    '~/assets/css/ionic.css',
+    '~/assets/css/main.css',
+  ],
   devtools: { enabled: true },
   ssr: false,
   ionic: {
@@ -16,4 +19,12 @@ export default defineNuxtConfig({
       //
     }
   },
+
+  postcss: {
+    plugins: {
+      tailwindcss: {},
+      autoprefixer: {},
+    },
+  },
+
 })
