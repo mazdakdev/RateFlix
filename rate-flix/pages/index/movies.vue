@@ -2,11 +2,11 @@
     <ion-page>
       <ion-header>
         <ion-toolbar>
-          <ion-title>Home</ion-title>
+          <ion-title>Movies</ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-content>
-        Home
+        Movies
       </ion-content>
     </ion-page>
   </template>
