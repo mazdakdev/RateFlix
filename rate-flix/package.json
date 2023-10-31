@@ -1,55 +1,18 @@
 {
-  "name": "rate-flix",
-  "version": "0.0.1",
+  "name": "nuxt-app",
   "private": true,
+  "type": "module",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit",
-    "test:e2e": "vue-cli-service test:e2e",
-    "lint": "vue-cli-service lint"
-  },
-  "dependencies": {
-    "@capacitor/android": "5.4.1",
-    "@capacitor/app": "5.0.6",
-    "@capacitor/browser": "^5.1.0",
-    "@capacitor/core": "5.4.1",
-    "@capacitor/haptics": "5.0.6",
-    "@capacitor/ios": "5.4.1",
-    "@capacitor/keyboard": "5.0.6",
-    "@capacitor/status-bar": "5.0.6",
-    "@ionic/vue": "^7.0.0",
-    "@ionic/vue-router": "^7.0.0",
-    "axios": "^1.5.1",
-    "core-js": "^3.6.5",
-    "ionicons": "^7.0.0",
-    "pinia": "^2.1.7",
-    "vue": "^3.2.47",
-    "vue-router": "^4.1.6",
-    "vue-star-rating": "^2.1.0"
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "@capacitor/cli": "5.4.1",
-    "@types/jest": "^27.0.2",
-    "@typescript-eslint/eslint-plugin": "^5.6.0",
-    "@typescript-eslint/parser": "^5.6.0",
-    "@vue/cli-plugin-babel": "~5.0.0-rc.1",
-    "@vue/cli-plugin-e2e-cypress": "~5.0.0-rc.1",
-    "@vue/cli-plugin-eslint": "~5.0.0-rc.1",
-    "@vue/cli-plugin-router": "~5.0.0-rc.1",
-    "@vue/cli-plugin-typescript": "~5.0.0-rc.1",
-    "@vue/cli-plugin-unit-jest": "~5.0.0-rc.1",
-    "@vue/cli-service": "~5.0.0-rc.1",
-    "@vue/eslint-config-typescript": "^11.0.2",
-    "@vue/test-utils": "^2.0.0-rc.16",
-    "@vue/vue3-jest": "^27.0.0-alpha.3",
-    "babel-jest": "^27.3.1",
-    "cypress": "^8.7.0",
-    "eslint": "^8.4.1",
-    "eslint-plugin-vue": "^9.8.0",
-    "jest": "^27.3.1",
-    "ts-jest": "^27.0.7",
-    "typescript": "^4.3.5"
-  },
-  "description": "An Ionic project"
+    "@nuxt/devtools": "latest",
+    "nuxt": "^3.8.0",
+    "vue": "^3.3.7",
+    "vue-router": "^4.2.5"
+  }
 }

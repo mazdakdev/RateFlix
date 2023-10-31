@@ -1,7 +1,0 @@
-{
-  "name": "RateFlix",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "vue"
-}
