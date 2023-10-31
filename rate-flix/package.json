@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-app",
+  "name": "rate-flix",
   "private": true,
   "type": "module",
   "scripts": {
@@ -11,6 +11,7 @@
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
+    "@nuxtjs/ionic": "^0.12.1",
     "nuxt": "^3.8.0",
     "vue": "^3.3.7",
     "vue-router": "^4.2.5"
