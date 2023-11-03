@@ -3,7 +3,8 @@
 This full stack application allows users to browse movies, write reviews, and receive personalized recommendations. It utilizes collaborative filtering for recommendations and LSTM neural networks for sentiment analysis of the provided comment in the scale of 0 to 5.
 
 ## TODO
-- [ ]
+- [x] Init Django and JWT
+- [ ] 
 
 ## Architecture
 
