@@ -2,7 +2,7 @@
     <img :src="poster" class="w-1/3 rounded-md" alt="">
     <div class="flex flex-col justify-between  ">
         <div class="flex flex-col space-y-1">
-            <span class="text-gray-700 dark:text-white font-semibold"><slot /></span>
+            <span class="text-white font-semibold"><slot /></span>
             <span class="text-xxs hidden xl:block" v-for="(genre, index) in genres" :key="index">{{genre}}</span>
         </div>
         <div class="flex space-x-2 items-center">

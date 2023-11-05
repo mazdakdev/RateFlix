@@ -2,13 +2,11 @@
 
 export default defineNuxtConfig({
   modules: [
-    '@nuxtjs/ionic',
-    'nuxt-swiper'
+    'nuxt-swiper',
+    '@pinia/nuxt',
   ],
   ssr: false,
-
   css: [
-    '~/assets/css/ionic.css',
     '~/assets/css/main.css',
   ],
 
