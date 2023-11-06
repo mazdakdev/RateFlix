@@ -82,7 +82,7 @@ import MovieCardsm from '../components/MovieCardsm.vue';
                     </svg>
                     <span>Logout</span>
                 </a> 
-                <a class=" flex items-center space-x-2 py-1  group hover:border-r-4 text-gray-400 hover:border-r-red-600 hover:font-semibold hover:text-white" href="#">                  
+                <a  @click="logout" class=" flex items-center space-x-2 py-1  group hover:border-r-4 text-gray-400 hover:border-r-red-600 hover:font-semibold hover:text-white" href="#">                  
                     <svg class="h-5 w-5 fill-gray-400 group-hover:fill-red-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                         <g>
                             <path d="M16 13v-2H7V8l-5 4 5 4v-3Z"></path>
@@ -165,3 +165,12 @@ import MovieCardsm from '../components/MovieCardsm.vue';
 </div>
 
 </template>
+
+<script setup lang="ts">
+    import { useAuthStore } from '~/store/auth';
+    const { logUserOut } = useAuthStore();
+
+    const logout = async () => {
+        logUserOut();
+    }
+</script>
