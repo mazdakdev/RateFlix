@@ -17,7 +17,6 @@ export default defineNuxtRouteMiddleware((to) => {
   // if token and refresh_token doesn't exist redirect to log in 
   if (!token.value && to?.name !== 'login') {
     abortNavigation();
-    const currentTime = new Date().getTime();
 
     if (refreshToken.value){
         refreshAccessToken(refreshToken.value)
@@ -34,6 +33,7 @@ export default defineNuxtRouteMiddleware((to) => {
         })
       
       } else {
+        console.log('3')
         // No refresh token available, log the user out
         useAuthStore().logUserOut();
         return navigateTo('/login');

@@ -39,33 +39,46 @@
 </template>
     
     
-    <script lang="ts" setup>
-        import { storeToRefs } from 'pinia'; // import storeToRefs helper hook from pinia
-        import { useAuthStore } from '~/store/auth'; // import the auth store we just created
-    
-        const { registerUser } = useAuthStore(); // use authenticateUser action from  auth store
-    
-        const { authenticated } = storeToRefs(useAuthStore()); // make authenticated state reactive with storeToRefs
-    
-        const user = ref({
-            email: '', 
-            password: '',
-            name: '',
-        });
+<script lang="ts" setup>
+    import { ref } from 'vue';
+    import { useRouter } from 'vue-router';
+    import { useAuthStore } from '~/store/auth';
 
-        const password2 = ref('');
-        const router = useRouter();
-    
-        const register = async () => {
-            if (password2.value == user.value.password){
-                await registerUser(user.value); 
+    const { registerUser, authenticateUser } = useAuthStore();
+    const { authenticated } = storeToRefs(useAuthStore());
 
-                if (authenticated) {
-                    router.push('/');
-                }
-            } else{
-                alert("Password and its repeat do not match")
-            }
-        };
-    </script>
-    
+    const user = ref({
+        email: '',
+        password: '',
+        name: '',
+    });
+
+    const password2 = ref('');
+    const router = useRouter();
+
+    const register = async () => {
+    if (password2.value === user.value.password) {
+        const IsRegistered = await registerUser(user.value);
+      
+        if (IsRegistered){
+            const LoginUser = ref({
+                email:user.value.email,
+                password:user.value.password
+            });
+
+            await authenticateUser(LoginUser.value);
+
+        } else {
+            alert("Please Try Again.");
+        }
+        
+       if(authenticated){
+            router.push('/');
+       }
+
+
+    } else {
+        alert("Password and its repeat do not match");
+    }
+    };
+</script>

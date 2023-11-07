@@ -66,8 +66,7 @@ export const useAuthStore = defineStore('auth', {
         this.loading = pending;
   
         if (data.value) {
-            console.log('hiki')
-            this.authenticateUser({email, password})
+          return data.value
         }
     },
 

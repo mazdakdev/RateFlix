@@ -109,5 +109,5 @@
         middleware: 'auth'
     })
 
-    const testGenres = ["Action", "Mystrious", "Romance"]
+    const testGenres = ["Action", "Mystrious", "Romance"];
 </script>

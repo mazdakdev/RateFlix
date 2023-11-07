@@ -6,7 +6,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserData
-        fields = ["id", "email", "name", "password"]
+        fields = ["id", "email", "name", "date_joined"]
 
     def create(self, validated_data):
         user = UserData.objects.create(email=validated_data['email'],
@@ -21,7 +21,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         data = super().validate(attrs)
         data['user'] = {
                 "name": self.user.name,
-                "email": self.user.email
+                "email": self.user.email,
             }
         
 
