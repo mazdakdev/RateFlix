@@ -11,8 +11,8 @@ export const useAuthStore = defineStore('auth', {
   state: () => ({
     authenticated: false,
     loading: false,
-    access_expire: new Date().getTime() + 30 * 60 * 1000, // 30 minutes
-    refresh_expire: new Date().getTime() + 3 * 3600 * 1000 // 3 hours
+    access_expire: 0,
+    refresh_expire: 0,
   }),
   actions: {
     async authenticateUser({ email, password }: UserPayloadInterface) {
@@ -29,11 +29,11 @@ export const useAuthStore = defineStore('auth', {
 
       if (data.value) {
         // Set the token expiration time
-        const expirationTime = this.access_expire;
-        const token = useCookie('token', { expires: new Date(expirationTime) });
+        this.access_expire = new Date().getTime() + 15 * 60 * 1000 // 15 min
+        const token = useCookie('token', { expires: new Date(this.access_expire) });
 
-        const refreshTokenExpirationTime =  this.refresh_expire;
-        const refreshToken = useCookie('refreshToken', { expires: new Date(refreshTokenExpirationTime) });
+        this.refresh_expire = new Date().getTime() + 3 * 3600 * 1000 // 3 hours;
+        const refreshToken = useCookie('refreshToken', { expires: new Date(this.refresh_expire) });
 
         const user = useCookie('user');
 
@@ -43,7 +43,6 @@ export const useAuthStore = defineStore('auth', {
 
         this.authenticated = true;
   
-   
       }
     },
     logUserOut() {

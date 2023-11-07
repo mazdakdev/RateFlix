@@ -14,11 +14,10 @@ export default defineNuxtRouteMiddleware((to) => {
 
   // if token exists and url is /login redirect to homepage
   if (token.value && to?.name === 'login') {
-    console.log("ne")
     return navigateTo('/');
   }
 
-  // if token doesn't exist redirect to log in
+  // if token and refresh_token doesn't exist redirect to log in 
   if (!token.value && to?.name !== 'login') {
     abortNavigation();
     const currentTime = new Date().getTime();
@@ -28,33 +27,24 @@ export default defineNuxtRouteMiddleware((to) => {
         .then((newToken: any) => {
           // Update the token and its expiration time in the cookies
           token.value = newToken.access;
-          const newExpirationTime = new Date().getTime() + 15 * 1000; // 15 minutes
+          const newExpirationTime = new Date().getTime() + 15 * 60 * 1000; // 15 minutes
           const new_token = useCookie('token', { expires: new Date(newExpirationTime) });
           new_token.value = newToken.access
           authenticated.value = true;
-        })
-        .catch(() => {
+        }).catch(async () => {
           useAuthStore().logUserOut();
-        
-          return navigateTo('/login');
-          
-        });
+          return await navigateTo('/login');
+        })
+      
       } else {
         // No refresh token available, log the user out
-        console.log("else")
         useAuthStore().logUserOut();
-        
         return navigateTo('/login');
     
       }
     }
-
-
- 
 });
 
-
-  // ...
 
   // Function to refresh the access token using the refresh token
   async function refreshAccessToken(refreshToken: string) {
@@ -68,8 +58,5 @@ export default defineNuxtRouteMiddleware((to) => {
     return data.value;
   }
 
-
-// TODO: Clean the Code
 // TODO: add ui
-//TODO: fix linting problems
 //TODO: add Authorization page
