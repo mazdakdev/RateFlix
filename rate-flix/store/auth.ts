@@ -2,9 +2,15 @@
 
 import { defineStore } from 'pinia';
 
-interface UserPayloadInterface {
+interface UserLoginPayloadInterface {
   email: string;
   password: string;
+}
+
+interface UserRegisterPayloadInterface {
+  email: string;
+  password: string;
+  name: string;
 }
 
 export const useAuthStore = defineStore('auth', {
@@ -14,8 +20,9 @@ export const useAuthStore = defineStore('auth', {
     access_expire: 0,
     refresh_expire: 0,
   }),
+
   actions: {
-    async authenticateUser({ email, password }: UserPayloadInterface) {
+    async authenticateUser({ email, password }: UserLoginPayloadInterface) {
       // useFetch from nuxt 3
       const { data, pending }: any = await useFetch('http://localhost:8000/api/auth/login/', {
         method: 'post',
@@ -42,9 +49,28 @@ export const useAuthStore = defineStore('auth', {
         refreshToken.value = data?.value?.refresh;
 
         this.authenticated = true;
-  
       }
     },
+
+    async registerUser({email, password, name}: UserRegisterPayloadInterface) {
+        // useFetch from nuxt 3
+        const { data, pending }: any = await useFetch('http://localhost:8000/api/auth/register/', {
+          method: 'post',
+          headers: { 'Content-Type': 'application/json' },
+          body: {
+            email,
+            password,
+            name
+          },
+        });
+        this.loading = pending;
+  
+        if (data.value) {
+            console.log('hiki')
+            this.authenticateUser({email, password})
+        }
+    },
+
     logUserOut() {
       const token = useCookie('token'); // useCookie new hook in nuxt 3
       const user = useCookie('user');

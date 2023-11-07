@@ -101,13 +101,12 @@
 
         </main>
 
-
-
   </template>
   
 <script setup lang="ts">
     definePageMeta({
-    layout: 'sidebar'
+        layout: 'sidebar',
+        middleware: 'auth'
     })
 
     const testGenres = ["Action", "Mystrious", "Romance"]

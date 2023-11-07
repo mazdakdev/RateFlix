@@ -1,9 +1,12 @@
 <template>
     <button @click="btn">click me</button>
-    Hello {{ useRequestEvent.n }}
+    Hello
 </template>
 
 <script setup lang="ts">
+    definePageMeta({
+        middleware: 'auth'
+    })
     import { authorizedFetch } from '~/utils/api';
     
     const btn = async ()=>{

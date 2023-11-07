@@ -1,5 +1,3 @@
-import { useAuthStore } from '~/store/auth';
-
 export async function authorizedFetch(url: string, options: any = {}) {
   const token = useCookie('token')
 

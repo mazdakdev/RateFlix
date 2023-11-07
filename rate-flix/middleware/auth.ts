@@ -4,13 +4,10 @@ import { storeToRefs } from 'pinia';
 import { useAuthStore } from '~/store/auth'; //
 
 export default defineNuxtRouteMiddleware((to) => {
-  const { authenticated, access_expire, refresh_expire } = storeToRefs(useAuthStore());
+  const { authenticated } = storeToRefs(useAuthStore());
   const token = useCookie('token');
   const refreshToken = useCookie('refreshToken'); 
 
-  if (token.value) {
-    authenticated.value = true;
-  }
 
   // if token exists and url is /login redirect to homepage
   if (token.value && to?.name === 'login') {
@@ -59,4 +56,3 @@ export default defineNuxtRouteMiddleware((to) => {
   }
 
 // TODO: add ui
-//TODO: add Authorization page
