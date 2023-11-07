@@ -1,6 +1,6 @@
 
 <template>
-    <div class="bg-gradient-to-tr from-rose-400 to-red-800 h-screen w-full flex justify-center items-center">
+    <div class="bg-gradient-to-tr from-indigo-400 to-rose-800 h-screen w-full flex justify-center items-center">
         <div class="w-full bg-cyan-800 sm:w-1/2 md:w-9/12 lg:w-1/2 shadow-md flex flex-col md:flex-row items-center mx-5 sm:m-0 rounded">
           <div class="w-full md:w-1/2 hidden md:flex flex-col justify-center items-center text-white">
             <h1 class="text-3xl">Welcome to</h1>

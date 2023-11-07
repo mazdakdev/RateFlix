@@ -28,8 +28,18 @@
                     <a href="#" class="hover:text-gray-700 text-gray-400">Movies</a>
                     <a href="#" class="hover:text-gray-700 text-gray-400">Animes</a>
                 </nav>
-            
-                <Poster :genres="testGenres">The Inception</Poster>
+                <Swiper
+                    :modules="[SwiperAutoplay, SwiperPagination]" 
+                    :slides-per-view="1" :loop="true" 
+                    
+                    :autoplay="{ 
+                        delay: 8000, 
+                        disableOnInteraction: true,    
+                    }" :pagination="true" >
+                    <SwiperSlide><Poster :genres="testGenres">The Inception</Poster></SwiperSlide>
+                    <SwiperSlide><Poster :genres="testGenres">The Hi</Poster></SwiperSlide>
+                </Swiper>
+                
 
             </section>
 
