@@ -13,18 +13,17 @@ interface UserRegisterPayloadInterface {
   name: string;
 }
 
+const BaseURL = "http://localhost:8000/api/auth/"
+
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     authenticated: false,
     loading: false,
-    access_expire: 0,
-    refresh_expire: 0,
   }),
-
   actions: {
     async authenticateUser({ email, password }: UserLoginPayloadInterface) {
       // useFetch from nuxt 3
-      const { data, pending }: any = await useFetch('http://localhost:8000/api/auth/login/', {
+      const { data, pending }: any = await useFetch(BaseURL + 'login/', {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
         body: {
@@ -36,11 +35,11 @@ export const useAuthStore = defineStore('auth', {
 
       if (data.value) {
         // Set the token expiration time
-        this.access_expire = new Date().getTime() + 15 * 60 * 1000 // 15 min
-        const token = useCookie('token', { expires: new Date(this.access_expire) });
+        const accessExpire = new Date().getTime() + 15 * 60 * 1000 // 15 min
+        const token = useCookie('token', { expires: new Date(accessExpire) });
 
-        this.refresh_expire = new Date().getTime() + 3 * 3600 * 1000 // 3 hours;
-        const refreshToken = useCookie('refreshToken', { expires: new Date(this.refresh_expire) });
+        const refreshTokenExpire = new Date().getTime() + 3 * 3600 * 1000 // 3 hours;
+        const refreshToken = useCookie('refreshToken', { expires: new Date(refreshTokenExpire) });
 
         const user = useCookie('user');
 
@@ -54,7 +53,7 @@ export const useAuthStore = defineStore('auth', {
 
     async registerUser({email, password, name}: UserRegisterPayloadInterface) {
         // useFetch from nuxt 3
-        const { data, pending }: any = await useFetch('http://localhost:8000/api/auth/register/', {
+        const { data, pending }: any = await useFetch(BaseURL + 'regiser/', {
           method: 'post',
           headers: { 'Content-Type': 'application/json' },
           body: {
