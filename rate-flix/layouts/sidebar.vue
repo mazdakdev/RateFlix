@@ -3,7 +3,7 @@ import MovieCardsm from '../components/MovieCardsm.vue';
 <template>
     <div class="flex min-h-screen  2xl:max-w-screen-2xl 2xl:mx-auto 2xl:border-x-2 2xl:border-gray-200  ">
         <!-- Left Sidebar -->
-        <aside class=" w-1/6 py-10 pl-10  min-w-min  border-r border-gray-300   hidden md:block ">
+        <aside class=" w-1/6 py-10 pl-10  min-w-min  border-r border-gray-800   hidden md:block ">
 
             <div class=" font-bold text-lg flex items-center gap-x-3">  
                 <div class="tracking-wide text-white">RateFlix</div>
@@ -99,7 +99,7 @@ import MovieCardsm from '../components/MovieCardsm.vue';
         <slot />
 
         <!-- Right Sidebar -->
-        <aside class=" w-1/5 py-10 px-10  min-w-min  border-l border-gray-300 hidden lg:block overflow-y-auto h-screen ">
+        <aside class=" w-1/5 py-10 px-10  min-w-min  border-l border-gray-800 hidden lg:block overflow-y-auto h-screen ">
 
             <div class="relative items-center content-center flex">
                 <span class="text-gray-400 absolute left-4 cursor-pointer">
