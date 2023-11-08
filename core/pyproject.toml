@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "core"
+version = "0.1.0"
+description = "Django Based Backend Server for RateFlix"
+authors = [
+        "Mazdak Pakaghideh <me@mazdak.dev>",
+        "Mahbod <mahbod.zamanpour@gmail.com>",
+        "Alireza Arabi <alirezaaraby5@gmail.com>",
+        "Saleh Talebi <salehtalebi24@gmail.com>"
+    ]
+license = "GPL-3.0"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^4.2.7"
+djangorestframework = "^3.14.0"
+djangorestframework-simplejwt = "^5.3.0"
+django-cors-headers = "^4.3.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

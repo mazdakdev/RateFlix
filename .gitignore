@@ -28,7 +28,6 @@ $RECYCLE.BIN/
 npm-debug.log*
 
 /rate-flix/.idea
-/rate-flix/.ionic
 /rate-flix.sass-cache
 /rate-flix/.sourcemaps
 /rate-flix/.versions
@@ -230,3 +229,6 @@ static/
 *.http
 .vscode/
 logs/
+
+# sqlite
+*.sqlite3
