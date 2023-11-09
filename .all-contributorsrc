@@ -2,10 +2,12 @@
   "files": [
     "README.md"
   ],
+
   "imageSize": 100,
   "commit": false,
   "commitType": "docs",
   "commitConvention": "angular",
+
   "contributors": [
     {
 
@@ -13,7 +15,12 @@
       "name": "Mahbod",
       "avatar_url": "https://avatars.githubusercontent.com/u/117342306?v=4",
       "profile": "https://github.com/Mah6od",
+      "contributions": [
+        "design",
+        "code"
+      ]
     },
+
     {
       "login": "salehtalebi24",
       "name": "salehtalebi24",
@@ -24,6 +31,7 @@
 
       ]
     },
+
     { 
       "login": "Alirezaaraby",
       "name": "Alirezaarabi",
@@ -35,7 +43,6 @@
       ]
 
     }
-    
   ],
   
   "contributorsPerLine": 7,
