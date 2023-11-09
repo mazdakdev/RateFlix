@@ -1,0 +1,27 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "commitType": "docs",
+  "commitConvention": "angular",
+  "contributors": [
+    {
+      "login": "Alirezaaraby",
+      "name": "Alirezaarabi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/45128978?v=4",
+      "profile": "http://alirezaarabi.com",
+      "contributions": [
+        "code",
+        "ideas"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "skipCi": true,
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "projectName": "RateFlix",
+  "projectOwner": "mazdakdev"
+}
