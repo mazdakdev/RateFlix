@@ -2,15 +2,12 @@
   "files": [
     "README.md"
   ],
-
   "imageSize": 100,
   "commit": false,
   "commitType": "docs",
   "commitConvention": "angular",
-
   "contributors": [
     {
-
       "login": "Mah6od",
       "name": "Mahbod",
       "avatar_url": "https://avatars.githubusercontent.com/u/117342306?v=4",
@@ -20,7 +17,6 @@
         "code"
       ]
     },
-
     {
       "login": "salehtalebi24",
       "name": "salehtalebi24",
@@ -28,11 +24,9 @@
       "profile": "https://github.com/salehtalebi24",
       "contributions": [
         "ideas"
-
       ]
     },
-
-    { 
+    {
       "login": "Alirezaaraby",
       "name": "Alirezaarabi",
       "avatar_url": "https://avatars.githubusercontent.com/u/45128978?v=4",
@@ -41,10 +35,19 @@
         "code",
         "ideas"
       ]
-
+    },
+    {
+      "login": "mazdakdev",
+      "name": "Mazdak Pakaghideh",
+      "avatar_url": "https://avatars.githubusercontent.com/u/60855141?v=4",
+      "profile": "http://mazdak.dev",
+      "contributions": [
+        "code",
+        "ideas",
+        "doc"
+      ]
     }
   ],
-  
   "contributorsPerLine": 7,
   "skipCi": true,
   "repoType": "github",
