@@ -8,15 +8,24 @@
   "commitConvention": "angular",
   "contributors": [
     {
+
       "login": "Mah6od",
       "name": "Mahbod",
       "avatar_url": "https://avatars.githubusercontent.com/u/117342306?v=4",
       "profile": "https://github.com/Mah6od",
+    },
+    {
+      "login": "salehtalebi24",
+      "name": "salehtalebi24",
+      "avatar_url": "https://avatars.githubusercontent.com/u/139631477?v=4",
+      "profile": "https://github.com/salehtalebi24",
       "contributions": [
-        "design"
+        "ideas"
+
       ]
     }
-  ],
+  ]
+  
   "contributorsPerLine": 7,
   "skipCi": true,
   "repoType": "github",
