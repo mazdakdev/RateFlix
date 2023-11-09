@@ -1,11 +1,12 @@
 # RateFlix - A safehome for Movie buffs
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
 ![GitHub](https://img.shields.io/github/license/mazdakdev/RateFlix)
 ![GitHub stars](https://img.shields.io/github/stars/mazdakdev/RateFlix)
 ![GitHub watchers](https://img.shields.io/github/watchers/mazdakdev/RateFlix)
 ![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/t/mazdakdev/RateFlix)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
+
 
 <img width="1440" alt="Screenshot 2023-11-09 at 6 19 03 PM-min" src="https://github.com/mazdakdev/RateFlix/assets/60855141/7a4bf55a-c5a4-4366-a1b8-aa7dfef50132">
 
@@ -98,18 +99,5 @@ TODO
 ## Deploy manualy
 
 
-## Contribution
-All type of contributions are welcommed.
-
-## Contributors ✨
-
-Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
-
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+## Contributions
+  This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
