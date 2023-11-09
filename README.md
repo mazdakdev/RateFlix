@@ -11,6 +11,16 @@ This full stack application allows users to browse movies, write reviews, and re
 ## Architecture
 TODO
 
+## Team and Contributors
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ## Technologies
 **The Recommender System / Sentiment Analysis:**
