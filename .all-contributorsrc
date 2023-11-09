@@ -23,9 +23,20 @@
         "ideas"
 
       ]
+    },
+    { "login": "Alirezaaraby",
+      "name": "Alirezaarabi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/45128978?v=4",
+      "profile": "http://alirezaarabi.com",
+      "contributions": [
+        "code",
+        "ideas"
+      ]
     }
+    
   ]
   
+main
   "contributorsPerLine": 7,
   "skipCi": true,
   "repoType": "github",
