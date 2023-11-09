@@ -22,6 +22,7 @@ TODO
 <table>
   <tbody>
     <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Mah6od"><img src="https://avatars.githubusercontent.com/u/117342306?v=4?s=100" width="100px;" alt="Mahbod"/><br /><sub><b>Mahbod</b></sub></a><br /><a href="#design-Mah6od" title="Design">🎨</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/salehtalebi24"><img src="https://avatars.githubusercontent.com/u/139631477?v=4?s=100" width="100px;" alt="salehtalebi24"/><br /><sub><b>salehtalebi24</b></sub></a><br /><a href="#ideas-salehtalebi24" title="Ideas, Planning, & Feedback">🤔</a></td>
     </tr>
   </tbody>
