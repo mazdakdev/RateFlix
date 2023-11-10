@@ -53,7 +53,7 @@ export const useAuthStore = defineStore('auth', {
 
     async registerUser({email, password, name}: UserRegisterPayloadInterface) {
         // useFetch from nuxt 3
-        const { data, pending }: any = await useFetch(BaseURL + 'regiser/', {
+        const { data, pending }: any = await useFetch(BaseURL + 'register/', {
           method: 'post',
           headers: { 'Content-Type': 'application/json' },
           body: {

@@ -12,9 +12,9 @@ class Command(BaseCommand):
     
     def load_data(self, source, num_processes):
 
-        df = pd.read_csv(source, sep='\t')
+        df = pd.read_csv(source)
     
-        all_genres = set(df['genres'].str.split(',').explode().unique())
+        all_genres = set(df['genres'].str.split('|').explode().unique())
         self.genre_objects = {}
 
         for genre_name in all_genres:
@@ -34,22 +34,19 @@ class Command(BaseCommand):
         movies = []
 
         for _, row in chunk.iterrows():
-            print(f"Adding {_}-{row['originalTitle']}")
+            print(f"Adding {_}-{row['title']}")
 
             movie = Movie()
 
-            # set movie fields
-            movie.title = row['originalTitle']
-            movie.tconst = row['tconst']
-            movie.is_adult = row['isAdult']
+        
+            movie.id = row['movieId']
+            movie.title = row['title']
 
-            if row['startYear'] != "\\N":
-                movie.start_year = row['startYear']
-
+    
             movie_genres = row['genres'].split(',')
             movie.save()
 
-            genres = [self.genre_objects[g] for g in row['genres'].split(',')]  
+            genres = [self.genre_objects[g] for g in row['genres'].split('|')]  
             movie.genres.add(*genres)
             movie.save()
 
@@ -59,5 +56,4 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         self.load_data(kwargs["source"], 4)
 
-#TODO: handle sereies episdoes
-#TODO: use Threads
+#TODO: use Threads instead of Multiprocessing.dummy
