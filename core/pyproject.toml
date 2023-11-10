@@ -18,6 +18,7 @@ djangorestframework = "^3.14.0"
 djangorestframework-simplejwt = "^5.3.0"
 django-cors-headers = "^4.3.0"
 python-dotenv = "^1.0.0"
+django-unixdatetimefield = "^1.2.0"
 
 
 [build-system]

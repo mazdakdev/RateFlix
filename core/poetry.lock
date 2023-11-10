@@ -49,6 +49,19 @@ files = [
 Django = ">=3.2"
 
 [[package]]
+name = "django-unixdatetimefield"
+version = "1.2.0"
+description = "UnixDateTimeField in Django"
+optional = false
+python-versions = "*"
+files = [
+    {file = "django-unixdatetimefield-1.2.0.tar.gz", hash = "sha256:809614c3b65caf3f0cbb40ec3d5efab13ccd01c556e00426dc01b67f03fcbf9d"},
+]
+
+[package.dependencies]
+django = "*"
+
+[[package]]
 name = "djangorestframework"
 version = "3.14.0"
 description = "Web APIs for Django, made easy."
@@ -159,4 +172,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "7c91cacf669838263fcf9929c6061dd50852df95341694fb24256224a56ec166"
+content-hash = "5d134f8192cd7ef66d3f034c9fcca94ac10f4528ef598e9d72b3dd459209b5f8"

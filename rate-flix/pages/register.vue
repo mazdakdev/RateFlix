@@ -15,14 +15,12 @@
                 <input type="email" placeholder="Email" v-model="user.email" class="w-full p-3 rounded border placeholder-gray-400 focus:outline-none focus:border-blue-700" />
               </div>
               <div class="mb-4">
-                <input type="text" placeholder="Name" v-model="user.name" class="w-full p-3 rounded border placeholder-gray-400 focus:outline-none focus:border-blue-700" />
+                <input type="text" placeholder="Name" v-model="user.name" class="w-full p-3 rounded border px- placeholder-gray-400 focus:outline-none focus:border-blue-700" />
               </div>
               <div class="mb-4 flex">
                 <input type="password" placeholder="Password" v-model="user.password" class="w-full p-3 rounded border placeholder-gray-400 focus:outline-none focus:border-blue-700" />
                 <input type="password" v-model="password2" placeholder="Repeat" class="w-full p-3 ml-3 rounded border placeholder-gray-400 focus:outline-none focus:border-blue-700" />
               </div>
-
-
 
               <button @click.prevent="register" class="bg-blue-700 font-bold text-white focus:outline-none rounded p-3">
                 Submit
