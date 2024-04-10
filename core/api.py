@@ -3,7 +3,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi import status, HTTPException
 from models.recommender.helper import MovieRecommender
 from models.sentimentLSTM.helper import CommentAnalyzer
-from deep_translator import GoogleTranslator
 from pydantic import BaseModel
 import random
 import re
@@ -22,7 +21,6 @@ comment_analyzer = CommentAnalyzer(
     vocab_path = "models/sentimentLSTM/vocab.pkl"
 )
 
-translator = GoogleTranslator()
 
 app.add_middleware(
     CORSMiddleware,
@@ -61,8 +59,7 @@ async def search(title: str, offset: int = 0, limit: int = 5):
 
 @app.get("/api/v1/score")
 async def analyse(comment: str):
-    en_comment = translator.translate(comment)
-    score = comment_analyzer.predict(en_comment)
+    score = comment_analyzer.predict(comment)
     score = round(score, 2)
 
     return {"score": score}
